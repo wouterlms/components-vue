@@ -15,12 +15,7 @@
         <span></span>
 
         <!-- real radio -->
-        <input
-          type="radio"
-          :checked="isChecked"
-          @input="onInput"
-          :disabled="disabled"
-        />
+        <input type="radio" :checked="isChecked" @input="onInput" :disabled="disabled" />
       </span>
       <span class="el-radio__content__label">
         <template v-if="label">

@@ -42,11 +42,7 @@
         class="el-select__options"
       >
         <ul v-if="options && options.length">
-          <li
-            v-for="option of options"
-            :key="option[label]"
-            @click="select(option)"
-          >
+          <li v-for="option of options" :key="option[label]" @click="select(option)">
             {{ option[label] }}
           </li>
         </ul>
@@ -114,6 +110,11 @@ export default {
   position: relative;
   line-height: 1;
 
+  ::v-deep .el-input__content__suffix-icon svg {
+    width: 0.8rem;
+    transition: 0.3s;
+  }
+
   @include when(loading) {
     cursor: not-allowed;
   }
@@ -126,11 +127,6 @@ export default {
     ::v-deep .el-input__content__suffix-icon svg {
       transform: rotate(-180deg);
     }
-  }
-
-  ::v-deep .el-input__content__suffix-icon svg {
-    width: 0.8rem;
-    transition: 0.3s;
   }
 
   &__options {
@@ -153,14 +149,6 @@ export default {
         &:hover {
           background: $select-option-background--hover;
         }
-      }
-    }
-
-    &__custom-input {
-      padding: 0.3rem !important;
-
-      ::v-deep .input__content {
-        padding: $input-padding / 2;
       }
     }
   }

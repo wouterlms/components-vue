@@ -101,17 +101,13 @@ export default {
       if (this.position === 'top') {
         return {
           transform: `translate(${
-            this.align === 'center'
-              ? `calc(-50% + ${this.transformedOffset})`
-              : this.transformedOffset
+            this.align === 'center' ? `calc(-50% + ${this.transformedOffset})` : this.transformedOffset
           }, calc(-100% - ${this.margin}))`
         }
       }
       return {
         transform: `translate(${
-          this.align === 'center'
-            ? `calc(-50% + ${this.transformedOffset})`
-            : this.transformedOffset
+          this.align === 'center' ? `calc(-50% + ${this.transformedOffset})` : this.transformedOffset
         }, calc(100% + ${this.margin}))`
       }
     },
@@ -145,10 +141,7 @@ export default {
     calculateArrowTransform() {
       const transform = {}
 
-      const x =
-        this.arrowAlign === 'left' || this.arrowAlign === 'right'
-          ? this.transformedArrowOffset
-          : '-50%'
+      const x = this.arrowAlign === 'left' || this.arrowAlign === 'right' ? this.transformedArrowOffset : '-50%'
 
       if (this.position === 'top') {
         return {

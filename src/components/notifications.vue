@@ -5,18 +5,11 @@
         v-for="notification of notifications"
         :key="notification.date"
         class="notification"
-        :class="[
-          notificationType(notification),
-          { 'notification--clickable': notification.click }
-        ]"
+        :class="[notificationType(notification), { 'notification--clickable': notification.click }]"
       >
         <div class="notification__wrapper" @click="onClick(notification)">
           <!-- icon -->
-          <iconEl
-            class="notification__icon"
-            v-if="notification.icon"
-            :icon="notification.icon"
-          />
+          <iconEl class="notification__icon" v-if="notification.icon" :icon="notification.icon" />
 
           <!-- content -->
           <div class="notification__content">

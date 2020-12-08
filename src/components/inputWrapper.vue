@@ -11,10 +11,7 @@
         {{ title }}
       </span>
 
-      <div
-        v-if="title && error"
-        class="el-input__wrapper__content__divider"
-      ></div>
+      <div v-if="title && error" class="el-input__wrapper__content__divider"></div>
 
       <span v-if="error" class="el-input__wrapper__content__error">
         {{ error }}

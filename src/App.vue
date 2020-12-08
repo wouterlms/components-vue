@@ -1,32 +1,57 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div class="app">
+    <tagInputEl icon="tag" suffix-icon="tag" :tags="tags" style="width: 500px;" placeholder="test" />
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import inputEl from '@/components/input'
+import loaderEl from '@/components/loader'
+import selectEl from '@/components/select'
+import tagInputEl from '@/components/tagInput'
+import checkboxEl from '@/components/checkbox'
+import radioEl from '@/components/radio'
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+export default {
+  components: {
+    inputEl,
+    loaderEl,
+    selectEl,
+    tagInputEl,
+    checkboxEl,
+    radioEl
+  },
+  data() {
+    return {
+      testString: 'test',
+      options: [
+        {
+          name: 'Option A'
+        },
+        {
+          name: 'Option B'
+        }
+      ],
+      tags: ['tag A', 'tag B'],
+      option: null,
+      checked: [],
+      radio: 'A'
     }
   }
+}
+</script>
+
+<style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+body {
+  background: rgb(245, 250, 255);
+  padding: 10rem;
+}
+
+html,
+body,
+.app {
+  font-family: 'Montserrat', sans-serif;
 }
 </style>

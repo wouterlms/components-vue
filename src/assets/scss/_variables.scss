@@ -1,0 +1,77 @@
+// colors
+$primary-dark: #000;
+$primary-light: #fff;
+$primary-accent: #5695e3;
+
+$error: #f56c6c;
+$error-background: #fef0f0;
+
+$warning: #e6a23c;
+$warning-background: #fdf6ec;
+
+$success: #67c23a;
+$success-background: #f0f9eb;
+
+$info: #909399;
+$info-background: #f4f4f5;
+
+// scrollbar
+
+// text
+$font-xs: 0.8rem;
+$font-sm: 0.9rem;
+$font-lg: 1.1rem;
+$font-xl: 1.2rem;
+
+// text color
+$primary-text: rgb(48, 49, 51);
+$regular-text: rgb(96, 98, 102);
+$secondary-text: rgb(144, 147, 153);
+$placeholder-text: rgb(192, 196, 204);
+
+// shadow
+$box-shadow: 0 2px 12px 0 rgba(7, 6, 6, 0.1);
+
+// border
+$border-radius: 4px;
+$border-radius-sm: $border-radius / 2;
+$border-radius-lg: $border-radius * 2;
+
+$border-color: rgb(220, 223, 230);
+$border-color-light: rgb(228, 231, 237);
+$border-color-lighter: rgb(235, 238, 245);
+$border-color-extralight: rgb(242, 246, 252);
+$border-color--focus: $primary-accent;
+
+// input
+$input-color: #606266;
+$input-color--disabled: #c0c4cc;
+$input-padding: 0.7rem;
+$input-transition: 0.3s;
+$input-background-color: $primary-light;
+$input-background-color--disabled: #f5f7fa;
+$input-placeholder-color: $placeholder-text;
+
+// tag
+$tag-color: #909399;
+$tag-background-color: #f4f4f5;
+$tag-border-color: #e9e9eb;
+
+// button
+$button-padding: 0.7rem;
+$button-color: $primary-light;
+$button-background: $primary-accent;
+
+// select
+$select-option-background: $primary-light;
+$select-option-background--hover: #f5f7fa;
+
+// checkbox
+$checkbox-border-color--hover: $primary-accent;
+$checkbox-background-color--selected: $primary-accent;
+$checkbox-background-color--disabled: #edf2fc;
+
+// radio
+$radio-border-color--hover: $primary-accent;
+$radio-background-color--selected: $primary-accent;
+$radio-background-color--disabled: #edf2fc;

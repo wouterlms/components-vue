@@ -1,0 +1,245 @@
+<template>
+  <inputWrapper
+    class="el-input"
+    :class="{
+      'state-disabled': disabled,
+      'state-loading': loading,
+      'state-error': error,
+      'state-focused': isFocused,
+      'state-read-only': readonly
+    }"
+    :title="title"
+    :error="error"
+    :disabled="disabled"
+  >
+    <label class="el-input__content">
+      <!-- prepend -->
+      <slot name="prepend" />
+
+      <!-- icon -->
+      <div v-if="icon" class="el-input__content__icon">
+        <iconEl :icon="icon" />
+      </div>
+
+      <component
+        class="el-input__content__input"
+        ref="input"
+        :is="inputType"
+        :type="type"
+        :value="value"
+        :spellcheck="spellcheck"
+        :placeholder="placeholder"
+        :disabled="disabled || loading"
+        :readonly="readonly"
+        :minlength="minlength"
+        :maxlength="maxlength"
+        :min="min"
+        :max="max"
+        :resize="resize"
+        :style="inputStyle"
+        @input="onInput"
+        @focus="onFocus"
+        @blur="onBlur"
+        @keydown="e => $emit('keydown', e)"
+      />
+
+      <!-- suffix icon -->
+      <div v-if="suffixIcon" class="el-input__content__suffix-icon">
+        <iconEl :icon="suffixIcon" />
+      </div>
+
+      <!-- append -->
+      <slot name="append" />
+
+      <!-- loader -->
+      <div v-if="loading" class="el-input__content__loader">
+        <loaderEl radius="1.5rem" />
+      </div>
+    </label>
+  </inputWrapper>
+</template>
+
+<script>
+import inputWrapper from './inputWrapper'
+import iconEl from './icon'
+import loaderEl from './loader'
+
+export default {
+  components: {
+    inputWrapper,
+    iconEl,
+    loaderEl
+  },
+  props: {
+    // default
+    type: {
+      type: String,
+      default: 'text'
+    },
+    placeholder: String,
+    value: [String, Number],
+    spellcheck: Boolean,
+    resize: String,
+    form: String,
+    disabled: Boolean,
+    readonly: Boolean,
+    minlength: Number,
+    maxlength: Number,
+    min: Number,
+    max: Number,
+
+    // custom
+    title: String,
+    icon: String,
+    suffixIcon: String,
+    error: String,
+    loading: Boolean,
+    height: {
+      type: String,
+      default: 'auto'
+    }
+  },
+  computed: {
+    inputType() {
+      return this.type === 'textarea' ? 'textarea' : 'input'
+    },
+    inputStyle() {
+      return {
+        resize: this.resize,
+        height: this.height
+      }
+    }
+  },
+  data() {
+    return {
+      isFocused: false
+    }
+  },
+
+  watch: {
+    value: function(newValue) {
+      this.$refs.input.value = newValue
+    }
+  },
+
+  methods: {
+    onInput(e) {
+      this.$emit('input', e.target.value)
+    },
+    onFocus() {
+      this.isFocused = true
+    },
+    onBlur() {
+      this.isFocused = false
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+@include b(input) {
+  display: flex;
+  flex-direction: column;
+
+  @include when(focused) {
+    .el-input__content {
+      border: 1px solid $border-color--focus;
+    }
+  }
+
+  @include when(read-only) {
+    .el-input__content {
+      cursor: pointer;
+    }
+  }
+
+  @include when(error) {
+    .el-input__content {
+      border: 1px solid $error;
+
+      &__icon,
+      &__suffix-icon {
+        fill: $error;
+      }
+    }
+  }
+
+  @include when(disabled) {
+    .el-input__content {
+      background: $input-background-color--disabled;
+      cursor: not-allowed;
+    }
+  }
+
+  @include when(loading) {
+    .el-input__content {
+      cursor: not-allowed;
+    }
+  }
+
+  &__content {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    background: $input-background-color;
+
+    transition: $input-transition;
+    margin: 0;
+    line-height: 1.2;
+
+    cursor: pointer;
+
+    &__icon,
+    &__suffix-icon {
+      fill: $input-placeholder-color;
+      transition: $input-transition;
+      line-height: 0;
+
+      svg {
+        width: 1rem;
+      }
+    }
+
+    &__icon {
+      padding-left: $input-padding;
+    }
+
+    &__suffix-icon {
+      padding-right: $input-padding;
+    }
+
+    &__input {
+      border: none;
+      background: transparent;
+      padding: $input-padding;
+      color: $input-color;
+      resize: none;
+
+      font-family: inherit;
+      font-size: inherit;
+
+      width: 100%;
+      cursor: inherit !important;
+
+      @include placeholder {
+        color: $input-placeholder-color;
+      }
+    }
+
+    &__loader {
+      height: 100%;
+      width: 2.5rem;
+
+      background: $input-background-color;
+      border-radius: $border-radius;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+</style>

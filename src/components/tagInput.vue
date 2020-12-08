@@ -31,7 +31,7 @@
             v-for="(tag, i) of tags"
             :key="i"
             :show-remove="true"
-            :single-line="false"
+            :single-line="true"
             :disabled="disabled"
             :error="!!error"
             @remove="removeTag(tag)"
@@ -260,14 +260,13 @@ export default {
         flex-wrap: wrap;
         overflow: scroll;
 
-        padding: $input-padding;
+        // padding: $input-padding / 4;
 
         input {
           flex-grow: 1;
           width: 1%;
           min-width: 60px;
-          padding: 0;
-          margin-bottom: 0.4rem;
+          padding: $input-padding;
         }
       }
     }

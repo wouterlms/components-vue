@@ -24,8 +24,8 @@
       <component
         class="el-input__content__input"
         ref="input"
-        :is="inputType"
-        :type="type"
+        :is="componentType"
+        :type="inputType"
         :value="value"
         :spellcheck="spellcheck"
         :placeholder="placeholder"
@@ -44,8 +44,8 @@
       />
 
       <!-- suffix icon -->
-      <div v-if="suffixIcon" class="el-input__content__suffix-icon">
-        <iconEl :icon="suffixIcon" />
+      <div v-if="getSuffixIcon" class="el-input__content__suffix-icon" @click="handleSuffixIconClick">
+        <iconEl :icon="getSuffixIcon" />
       </div>
 
       <!-- append -->
@@ -100,19 +100,29 @@ export default {
     }
   },
   computed: {
-    inputType() {
+    componentType() {
       return this.type === 'textarea' ? 'textarea' : 'input'
+    },
+    inputType() {
+      if (this.type === 'password') {
+        return this.showPassword ? 'text' : 'password'
+      }
+      return this.type
     },
     inputStyle() {
       return {
         resize: this.resize,
         height: this.height
       }
+    },
+    getSuffixIcon() {
+      return this.type === 'password' ? (this.showPassword ? 'eye-hide' : 'eye-view') : this.suffixIcon
     }
   },
   data() {
     return {
-      isFocused: false
+      isFocused: false,
+      showPassword: false
     }
   },
 
@@ -131,13 +141,16 @@ export default {
     },
     onBlur() {
       this.isFocused = false
+    },
+    handleSuffixIconClick() {
+      this.showPassword = !this.showPassword
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-@include b(input) {
+.el-input {
   display: flex;
   flex-direction: column;
 

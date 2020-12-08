@@ -23,7 +23,7 @@ export default {
   computed: {
     tagStyle() {
       return {
-        marginBottom: this.singleLine ? 0 : '.4rem'
+        // marginBottom: this.singleLine ? 0 : '.4rem'
       }
     }
   },
@@ -43,7 +43,7 @@ export default {
   align-items: center;
 
   padding: $input-padding / 2;
-  margin-right: 0.3rem;
+  margin: 0.15rem 0.15rem;
 
   font-size: $font-xs;
 

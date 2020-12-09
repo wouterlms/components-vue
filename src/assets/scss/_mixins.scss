@@ -11,12 +11,7 @@
   $selector: &;
   $currentSelector: '';
   @each $unit in $element {
-    $currentSelector: #{$currentSelector +
-      '.' +
-      $B +
-      $element-separator +
-      $unit +
-      ','};
+    $currentSelector: #{$currentSelector + '.' + $B + $element-separator + $unit + ','};
   }
 
   @if hitAllSpecialNestRule($selector) {
@@ -40,11 +35,7 @@
   $selector: &;
   $currentSelector: '';
   @each $unit in $modifier {
-    $currentSelector: #{$currentSelector +
-      & +
-      $modifier-separator +
-      $unit +
-      ','};
+    $currentSelector: #{$currentSelector + & + $modifier-separator + $unit + ','};
   }
 
   @at-root {
@@ -80,7 +71,7 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 
-  ::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     display: none;
   }
 }

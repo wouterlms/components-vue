@@ -64,6 +64,11 @@ export default {
     arrowOffset: {
       type: String,
       default: '0px'
+    },
+
+    width: {
+      type: String,
+      default: 'auto'
     }
   },
   computed: {
@@ -156,7 +161,8 @@ export default {
     menuStyle() {
       return {
         ...this.calculateContentPosition,
-        ...this.calculateContentTranslate
+        ...this.calculateContentTranslate,
+        width: this.width
       }
     },
 
@@ -189,14 +195,13 @@ export default {
 
     background: $primary-light;
     overflow: hidden;
-    width: 100%;
   }
 
   &__cloned-content {
     @include no-scrollbar;
 
     box-shadow: $box-shadow;
-    z-index: 2;
+    z-index: 1;
   }
 
   &__content {

@@ -181,6 +181,10 @@ export default {
     .el-input__content {
       background: $input-background-color--disabled;
       cursor: not-allowed;
+
+      &__input {
+        color: $input-color--disabled;
+      }
     }
   }
 
@@ -236,6 +240,16 @@ export default {
 
       width: 100%;
       cursor: inherit !important;
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      &[type='number'] {
+        -moz-appearance: textfield;
+      }
 
       @include placeholder {
         color: $input-placeholder-color;

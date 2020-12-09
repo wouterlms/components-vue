@@ -150,7 +150,7 @@ $transition: cubic-bezier(0.71, -0.46, 0.29, 1.46);
         padding: 2px;
         box-sizing: border-box;
 
-        z-index: 1;
+        // z-index: 1;
         transition: 0.2s $transition;
 
         &::before {

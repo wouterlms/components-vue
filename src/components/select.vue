@@ -9,7 +9,6 @@
     }"
   >
     <inputEl
-      cass="el-select__input"
       :icon="icon"
       :placeholder="placeholder"
       :loading="loading"
@@ -18,9 +17,9 @@
       :error="error"
       suffix-icon="chevron-down"
       readonly
-      @mouseup.native="onInputClick"
       v-click-outside="() => (showSelectMenu = false)"
       v-model="computedValue"
+      @mouseup.native="onInputClick"
     >
       <!-- prepend -->
       <template slot="prepend">
@@ -39,16 +38,17 @@
         arrow-align="right"
         arrow-offset=".9rem"
         margin="10px"
+        width="100%"
         class="el-select__options"
       >
         <ul v-if="options && options.length">
-          <li v-for="option of options" :key="option[label]" @click="select(option)">
+          <optionEl v-for="option of options" :key="option[label]" @click="select(option)">
             {{ option[label] }}
-          </li>
+          </optionEl>
         </ul>
 
         <!-- moet nog aangepast worden voor custom list items -->
-        <!-- <slot v-else /> -->
+        <slot v-else />
       </tooltipEl>
     </transition>
   </div>
@@ -57,17 +57,18 @@
 <script>
 import inputEl from './input'
 import tooltipEl from './tooltip'
+import optionEl from './option'
 
 export default {
+  name: 'elSelect',
+  componentName: 'elSelect',
   components: {
     inputEl,
-    tooltipEl
+    tooltipEl,
+    optionEl
   },
   props: {
-    options: {
-      type: Array,
-      required: true
-    },
+    options: Array,
     value: Object,
     placeholder: String,
     icon: String,
@@ -93,6 +94,12 @@ export default {
       return this.value[this.label]
     }
   },
+  mounted() {
+    this.$on('handleOptionClick', this.select)
+  },
+  beforeDestroy() {
+    this.$off('handleOptionClick', this.select)
+  },
   methods: {
     onInputClick() {
       this.showSelectMenu = this.disabled ? false : !this.showSelectMenu
@@ -111,7 +118,7 @@ export default {
   line-height: 1;
 
   ::v-deep .el-input__content__suffix-icon svg {
-    width: 0.8rem;
+    width: 0.8rem !important;
     transition: 0.3s;
   }
 
@@ -136,20 +143,6 @@ export default {
     ul {
       max-height: 300px;
       overflow: scroll;
-
-      li {
-        padding: 0.7rem;
-        text-align: left;
-
-        background: $select-option-background;
-        transition: 0.3s;
-
-        cursor: pointer;
-
-        &:hover {
-          background: $select-option-background--hover;
-        }
-      }
     }
   }
 }

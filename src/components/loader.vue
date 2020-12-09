@@ -9,6 +9,9 @@
         fill="none"
         stroke-width="2"
         stroke-miterlimit="10"
+        :style="{
+          stroke: light ? 'white' : ''
+        }"
       />
     </svg>
   </div>
@@ -20,7 +23,8 @@ export default {
     radius: {
       type: String,
       default: '20px'
-    }
+    },
+    light: Boolean
   },
   computed: {
     style() {
@@ -62,6 +66,7 @@ export default {
       stroke-dashoffset: 0;
       animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
       stroke-linecap: round;
+      stroke: $primary-accent;
     }
   }
 }
@@ -84,23 +89,6 @@ export default {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -124px;
-  }
-}
-
-@keyframes color {
-  100%,
-  0% {
-    stroke: $primary-accent;
-  }
-  40% {
-    stroke: $primary-dark;
-  }
-  66% {
-    stroke: $primary-accent;
-  }
-  80%,
-  90% {
-    stroke: $primary-dark;
   }
 }
 </style>

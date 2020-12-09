@@ -47,8 +47,9 @@
           </optionEl>
         </ul>
 
-        <!-- moet nog aangepast worden voor custom list items -->
-        <slot v-else />
+        <ul v-else>
+          <slot />
+        </ul>
       </tooltipEl>
     </transition>
   </div>

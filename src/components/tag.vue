@@ -38,6 +38,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$tag-color: #909399;
+$tag-background-color: #f4f4f5;
+$tag-border-color: #e9e9eb;
+
 .tag {
   display: flex;
   align-items: center;

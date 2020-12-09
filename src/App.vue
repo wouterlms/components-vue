@@ -1,7 +1,20 @@
 <template>
   <div class="app">
-    <switchEl active-text="active" inactive-text="inactive" v-model="switchh" />
-    {{ switchh }}
+    <div>
+      <switchEl active-text="active" inactive-text="inactive" v-model="switchh" />
+    </div>
+    <div>
+      <checkboxEl disabled>checkbox</checkboxEl>
+    </div>
+    <div>
+      <radioEl v-model="radio" label="A" disabled>radio A</radioEl>
+      <radioEl v-model="radio" label="B">radio B</radioEl>
+    </div>
+
+    <div>
+      <buttonEl type="danger" size="small" secondary rounded>Cancel</buttonEl>
+      <buttonEl size="small" rounded>Confirm</buttonEl>
+    </div>
   </div>
 </template>
 
@@ -65,7 +78,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 body {
   background: rgb(245, 250, 255);
@@ -75,7 +88,11 @@ body {
 html,
 body,
 .app {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Poppins', sans-serif;
   // display: flex;
+
+  & > div {
+    margin-bottom: 0.5rem;
+  }
 }
 </style>

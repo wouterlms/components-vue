@@ -14,8 +14,7 @@
         <span>
           <iconEl icon="check" />
         </span>
-
-        <input type="checkbox" :checked="isChecked" v-model="isChecked" />
+        <input type="checkbox" :checked="isChecked" v-model="isChecked" :disabled="disabled" />
       </span>
       <span class="checkbox__content__label">
         <slot />
@@ -71,21 +70,24 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$checkbox-border-color--hover: $primary-accent;
+$checkbox-background-color--selected: $primary-accent;
+$checkbox-background-color--disabled: #edf2fc;
 $transition: cubic-bezier(0.71, -0.46, 0.29, 1.46);
 
 .checkbox {
   @include when(disabled) {
     .checkbox {
-      cursor: not-allowed;
-
       &__content {
+        cursor: not-allowed;
+
         &__input {
           span {
             background: $checkbox-background-color--disabled;
           }
-          &__label {
-            color: $input-color--disabled;
-          }
+        }
+        &__label {
+          color: $input-color--disabled;
         }
       }
     }
@@ -175,7 +177,7 @@ $transition: cubic-bezier(0.71, -0.46, 0.29, 1.46);
     }
   }
 
-  &:hover:not(.checkbox--disabled):not(.checkbox--error) &__content__input {
+  &:hover:not(.state-disabled):not(.state-error) &__content__input {
     span {
       border-color: $checkbox-border-color--hover;
     }

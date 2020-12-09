@@ -22,6 +22,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$select-option-background: $primary-light;
+$select-option-background--hover: #f5f7fa;
+
 .option {
   padding: 0.7rem;
   text-align: left;

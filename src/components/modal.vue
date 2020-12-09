@@ -65,6 +65,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$modal-padding: 1rem;
+
 .modal {
   position: relative;
   z-index: 99;

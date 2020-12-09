@@ -15,6 +15,7 @@
         'button--rounded': rounded
       }
     ]"
+    :style="buttonSize"
   >
     <span class="button__content">
       <iconEl v-if="icon" :icon="icon" class="button__content__icon" />
@@ -50,7 +51,8 @@ export default {
     suffixIcon: String,
     secondary: Boolean,
     round: Boolean,
-    rounded: Boolean
+    rounded: Boolean,
+    size: String
   },
   computed: {
     componentType() {
@@ -71,6 +73,30 @@ export default {
           return `button--${this.secondary ? 'secondary' : 'primary'}--danger`
       }
       return `button--${this.secondary ? 'secondary' : 'primary'}`
+    },
+    buttonSize() {
+      switch (this.size) {
+        case 'extra-small':
+          return {
+            '--padding-y': this.round ? '7px' : '7px',
+            '--padding-x': this.round ? '7px' : '12px',
+            '--font-size': '.8rem',
+            '--icon-size': '.6rem'
+          }
+        case 'small':
+          return {
+            '--padding-y': this.round ? '9px' : '9px',
+            '--padding-x': this.round ? '9px' : '15px',
+            '--font-size': '.9rem',
+            '--icon-size': '.7rem'
+          }
+      }
+      return {
+        '--padding-y': this.round ? '12px' : '12px',
+        '--padding-x': this.round ? '12px' : '20px',
+        '--font-size': '1rem',
+        '--icon-size': '.8rem'
+      }
     }
   },
   methods: {
@@ -84,12 +110,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
+// $button-padding-y: 12px;
+// $button-padding-x: 20px;
+// $button-padding--round: 10px;
+$button-color: $primary-light;
+$button-background: $primary-accent;
+
 .button {
   position: relative;
 
-  padding: $button-padding;
+  padding: var(--padding-y) var(--padding-x);
   border-radius: $border-radius;
   border: 1px solid $primary-accent;
+
+  font-family: inherit;
 
   @include when(loading) {
     cursor: not-allowed;
@@ -184,7 +218,7 @@ export default {
   }
 
   &--round {
-    padding: $button-padding--round;
+    padding: var(--padding-x);
     border-radius: 50%;
   }
 
@@ -196,23 +230,27 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    line-height: 1;
 
     span {
       font-weight: 500;
+      font-size: var(--font-size);
       white-space: nowrap;
     }
 
     &__icon,
     &__suffix-icon {
       fill: $button-color;
+      width: var(--icon-size) !important;
+      height: var(--icon-size) !important;
     }
 
-    &__icon {
-      margin-right: $button-padding;
+    &__icon ~ span {
+      padding-left: calc(var(--padding-x) / 2);
     }
 
-    &__suffix-icon {
-      margin-left: $button-padding;
+    span + &__suffix-icon {
+      padding-left: calc(var(--padding-x) / 2);
     }
 
     &__loader {

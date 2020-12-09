@@ -6,7 +6,7 @@
       'state-disabled': disabled
     }"
   >
-    <span>
+    <span v-if="inactiveText" class="slider__inactive">
       {{ inactiveText }}
     </span>
 
@@ -16,7 +16,7 @@
 
     <div class="slider__slider"></div>
 
-    <span>
+    <span v-if="activeText" class="slider__active">
       {{ activeText }}
     </span>
   </label>
@@ -47,6 +47,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$switch-background-color--inactive: #dddfe6;
+$switch-background-color--active: $primary-accent;
+$switch-background-color--disabled: #edf2fc;
+$switch-width: 40px;
 $transition: 0.3s;
 
 .slider {
@@ -59,10 +63,10 @@ $transition: 0.3s;
   @include when(switched) {
     .slider {
       &__slider {
-        background: $slider-background-color--active;
+        background: $switch-background-color--active;
 
         &::before {
-          transform: translateX(20px);
+          transform: translateX($switch-width / 2);
         }
       }
     }
@@ -70,18 +74,38 @@ $transition: 0.3s;
 
   @include when(disabled) {
     cursor: not-allowed;
+
+    .slider {
+      &__active,
+      &__inactive {
+        color: $input-color--disabled;
+      }
+    }
   }
 
   input {
     display: none;
   }
 
+  &__active,
+  &__inactive {
+    font-weight: 500;
+  }
+
+  &__inactive {
+    margin-right: 0.5rem;
+  }
+
+  &__active {
+    margin-left: 0.5rem;
+  }
+
   &__slider {
     position: relative;
-    width: 40px;
-    height: 20px;
+    width: $switch-width;
+    height: $switch-width / 2;
 
-    background: $slider-background-color--inactive;
+    background: $switch-background-color--inactive;
     border-radius: $border-radius-lg;
 
     transition: $transition;
@@ -93,8 +117,8 @@ $transition: 0.3s;
       top: 1px;
       left: 1px;
 
-      width: 18px;
-      height: 18px;
+      width: $switch-width / 2 - 2px;
+      height: $switch-width / 2 - 2px;
 
       border-radius: 50%;
 

@@ -18,10 +18,10 @@
         <input type="radio" :checked="isChecked" @input="onInput" :disabled="disabled" />
       </span>
       <span class="radio__content__label">
-        <template v-if="label">
+        <!-- <template v-if="label">
           {{ label }}
-        </template>
-        <slot v-else />
+        </template> -->
+        <slot />
       </span>
     </label>
   </inputWrapperEl>
@@ -57,7 +57,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$radio-border-color--hover: $primary-accent;
+$radio-background-color--selected: $primary-accent;
+$radio-background-color--disabled: #edf2fc;
 $transition: cubic-bezier(0.71, -0.46, 0.29, 1.46);
+
 .radio {
   @include when(checked) {
     .radio {

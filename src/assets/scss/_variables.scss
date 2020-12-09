@@ -49,36 +49,3 @@ $input-transition: 0.3s;
 $input-background-color: $primary-light;
 $input-background-color--disabled: #f5f7fa;
 $input-placeholder-color: $placeholder-text;
-
-// tag
-$tag-color: #909399;
-$tag-background-color: #f4f4f5;
-$tag-border-color: #e9e9eb;
-
-// button
-$button-padding: 12px 20px;
-$button-padding--round: 10px;
-$button-color: $primary-light;
-$button-background: $primary-accent;
-
-// select
-$select-option-background: $primary-light;
-$select-option-background--hover: #f5f7fa;
-
-// checkbox
-$checkbox-border-color--hover: $primary-accent;
-$checkbox-background-color--selected: $primary-accent;
-$checkbox-background-color--disabled: #edf2fc;
-
-// checkbox
-$slider-background-color--inactive: #dddfe6;
-$slider-background-color--active: $primary-accent;
-$slider-background-color--disabled: #edf2fc;
-
-// radio
-$radio-border-color--hover: $primary-accent;
-$radio-background-color--selected: $primary-accent;
-$radio-background-color--disabled: #edf2fc;
-
-// modal
-$modal-padding: 1rem;

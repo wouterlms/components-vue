@@ -1,6 +1,6 @@
 <template>
   <inputWrapper
-    class="el-input"
+    class="input"
     :class="{
       'state-disabled': disabled,
       'state-loading': loading,
@@ -12,17 +12,17 @@
     :error="error"
     :disabled="disabled"
   >
-    <label class="el-input__content">
+    <label class="input__content">
       <!-- prepend -->
       <slot name="prepend" />
 
       <!-- icon -->
-      <div v-if="icon" class="el-input__content__icon">
+      <div v-if="icon" class="input__content__icon">
         <iconEl :icon="icon" />
       </div>
 
       <component
-        class="el-input__content__input"
+        class="input__content__input"
         ref="input"
         :is="componentType"
         :type="inputType"
@@ -44,7 +44,7 @@
       />
 
       <!-- suffix icon -->
-      <div v-if="getSuffixIcon" class="el-input__content__suffix-icon" @click="handleSuffixIconClick">
+      <div v-if="getSuffixIcon" class="input__content__suffix-icon" @click="handleSuffixIconClick">
         <iconEl :icon="getSuffixIcon" />
       </div>
 
@@ -52,7 +52,7 @@
       <slot name="append" />
 
       <!-- loader -->
-      <div v-if="loading" class="el-input__content__loader">
+      <div v-if="loading" class="input__content__loader">
         <loaderEl radius="1.5rem" />
       </div>
     </label>
@@ -150,24 +150,24 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.el-input {
+.input {
   display: flex;
   flex-direction: column;
 
   @include when(focused) {
-    .el-input__content {
+    .input__content {
       border: 1px solid $border-color--focus;
     }
   }
 
   @include when(read-only) {
-    .el-input__content {
+    .input__content {
       cursor: pointer;
     }
   }
 
   @include when(error) {
-    .el-input__content {
+    .input__content {
       border: 1px solid $error;
 
       &__icon,
@@ -178,7 +178,7 @@ export default {
   }
 
   @include when(disabled) {
-    .el-input__content {
+    .input__content {
       background: $input-background-color--disabled;
       cursor: not-allowed;
 
@@ -189,7 +189,7 @@ export default {
   }
 
   @include when(loading) {
-    .el-input__content {
+    .input__content {
       cursor: not-allowed;
     }
   }

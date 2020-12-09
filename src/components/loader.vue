@@ -1,8 +1,8 @@
 <template>
-  <div class="el-loader" :style="style">
-    <svg class="el-loader__circular" viewBox="25 25 50 50">
+  <div class="loader" :style="style">
+    <svg class="loader__circular" viewBox="25 25 50 50">
       <circle
-        class="el-loader__circular__path"
+        class="loader__circular__path"
         cx="50"
         cy="50"
         r="20"
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.el-loader {
+.loader {
   position: relative;
   margin: 0 auto;
   width: var(--radius) !important;

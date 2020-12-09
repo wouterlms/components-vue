@@ -1,6 +1,6 @@
 <template>
   <inputWrapperEl
-    class="el-radio"
+    class="radio"
     :class="{
       'state-checked': isChecked,
       'state-disabled': disabled,
@@ -9,15 +9,15 @@
     :error="error"
     :disabled="disabled"
   >
-    <label class="el-radio__content">
-      <span class="el-radio__content__input">
+    <label class="radio__content">
+      <span class="radio__content__input">
         <!-- custom radio -->
         <span></span>
 
         <!-- real radio -->
         <input type="radio" :checked="isChecked" @input="onInput" :disabled="disabled" />
       </span>
-      <span class="el-radio__content__label">
+      <span class="radio__content__label">
         <template v-if="label">
           {{ label }}
         </template>
@@ -58,9 +58,9 @@ export default {
 
 <style scoped lang="scss">
 $transition: cubic-bezier(0.71, -0.46, 0.29, 1.46);
-.el-radio {
+.radio {
   @include when(checked) {
-    .el-radio {
+    .radio {
       &__content {
         &__input {
           span {
@@ -77,7 +77,7 @@ $transition: cubic-bezier(0.71, -0.46, 0.29, 1.46);
   }
 
   @include when(error) {
-    .el-radio {
+    .radio {
       &__content {
         &__input {
           span {
@@ -98,7 +98,7 @@ $transition: cubic-bezier(0.71, -0.46, 0.29, 1.46);
   }
 
   @include when(disabled) {
-    .el-radio {
+    .radio {
       &__content {
         cursor: not-allowed;
 

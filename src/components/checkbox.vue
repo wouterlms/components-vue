@@ -1,6 +1,6 @@
 <template>
   <inputWrapperEl
-    class="el-checkbox"
+    class="checkbox"
     :error="error"
     :disabled="disabled"
     :class="{
@@ -9,15 +9,15 @@
       'state-error': error
     }"
   >
-    <label class="el-checkbox__content">
-      <span class="el-checkbox__content__input">
+    <label class="checkbox__content">
+      <span class="checkbox__content__input">
         <span>
           <iconEl icon="check" />
         </span>
 
         <input type="checkbox" :checked="isChecked" v-model="isChecked" />
       </span>
-      <span class="el-checkbox__content__label">
+      <span class="checkbox__content__label">
         <slot />
       </span>
     </label>
@@ -73,9 +73,9 @@ export default {
 <style scoped lang="scss">
 $transition: cubic-bezier(0.71, -0.46, 0.29, 1.46);
 
-.el-checkbox {
+.checkbox {
   @include when(disabled) {
-    .el-checkbox {
+    .checkbox {
       cursor: not-allowed;
 
       &__content {
@@ -92,7 +92,7 @@ $transition: cubic-bezier(0.71, -0.46, 0.29, 1.46);
   }
 
   @include when(checked) {
-    .el-checkbox {
+    .checkbox {
       &__content {
         &__input {
           span {
@@ -109,7 +109,7 @@ $transition: cubic-bezier(0.71, -0.46, 0.29, 1.46);
   }
 
   @include when(error) {
-    .el-checkbox {
+    .checkbox {
       &__content {
         &__input {
           span {

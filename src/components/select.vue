@@ -1,6 +1,6 @@
 <template>
   <div
-    class="el-select"
+    class="select"
     :class="{
       'state-loading': loading,
       'state-disabled': disabled,
@@ -39,7 +39,7 @@
         arrow-offset=".9rem"
         margin="10px"
         width="100%"
-        class="el-select__options"
+        class="select__options"
       >
         <ul v-if="options && options.length">
           <optionEl v-for="option of options" :key="option[label]" @click="select(option)">
@@ -114,11 +114,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.el-select {
+.select {
   position: relative;
   line-height: 1;
 
-  ::v-deep .el-input__content__suffix-icon svg {
+  ::v-deep .input__content__suffix-icon svg {
     width: 0.8rem !important;
     transition: 0.3s;
   }
@@ -132,7 +132,7 @@ export default {
   }
 
   @include when(focused) {
-    ::v-deep .el-input__content__suffix-icon svg {
+    ::v-deep .input__content__suffix-icon svg {
       transform: rotate(-180deg);
     }
   }

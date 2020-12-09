@@ -1,18 +1,7 @@
 <template>
   <div class="app">
-    <selectEl icon="add" placeholder="Vind jouw merk" v-model="option" label="name">
-      <ul>
-        <optionEl
-          v-for="option of options"
-          :key="option.name"
-          :value="option"
-          style="display: flex; align-items: center;"
-        >
-          <iconEl :icon="option.icon" />
-          {{ option.name }}
-        </optionEl>
-      </ul>
-    </selectEl>
+    <switchEl active-text="active" inactive-text="inactive" v-model="switchh" />
+    {{ switchh }}
   </div>
 </template>
 
@@ -30,6 +19,7 @@ import numberInputEl from '@/components/numberInput'
 import tooltipEl from '@/components/tooltip'
 import optionEl from '@/components/option'
 import iconEl from '@/components/icon'
+import switchEl from '@/components/switch'
 
 export default {
   components: {
@@ -45,7 +35,8 @@ export default {
     numberInputEl,
     tooltipEl,
     optionEl,
-    iconEl
+    iconEl,
+    switchEl
   },
   data() {
     return {
@@ -65,7 +56,8 @@ export default {
       checked: [],
       radio: 'A',
       showModal: false,
-      number: 0
+      number: 0,
+      switchh: false
     }
   },
   mounted() {}

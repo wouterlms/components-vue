@@ -1,15 +1,15 @@
 <template>
-  <div class="el-modal">
+  <div class="modal">
     <!-- overlay -->
     <transition name="overlay">
-      <div v-if="show" class="el-modal__overlay" @click="clickOutside"></div>
+      <div v-if="show" class="modal__overlay" @click="clickOutside"></div>
     </transition>
 
     <transition name="modal">
-      <div v-if="show" class="el-modal__content">
-        <div v-if="title || (showClose && !requiresAction)" class="el-modal__content__header">
+      <div v-if="show" class="modal__content">
+        <div v-if="title || (showClose && !requiresAction)" class="modal__content__header">
           <!-- title -->
-          <span v-if="title" class="el-modal__content__header__title">
+          <span v-if="title" class="modal__content__header__title">
             {{ title }}
           </span>
           <!-- empty span for spacing -->
@@ -20,7 +20,7 @@
             v-if="showClose && !requiresAction"
             @click.native="close"
             icon="close"
-            class="el-modal__content__header__close"
+            class="modal__content__header__close"
           />
         </div>
 
@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.el-modal {
+.modal {
   position: relative;
   z-index: 99;
 

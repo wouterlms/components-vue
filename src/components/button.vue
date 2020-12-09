@@ -5,23 +5,24 @@
     :to="to"
     :href="href"
     @click="handleClick"
-    class="el-button"
+    class="button"
     :class="[
       buttonType,
       {
         'state-disabled': disabled,
         'state-loading': loading,
-        'el-button--round': round
+        'button--round': round,
+        'button--rounded': rounded
       }
     ]"
   >
-    <span class="el-button__content">
-      <iconEl v-if="icon" :icon="icon" class="el-button__content__icon" />
+    <span class="button__content">
+      <iconEl v-if="icon" :icon="icon" class="button__content__icon" />
       <span v-if="$slots.default">
         <slot />
       </span>
-      <loaderEl v-if="loading" class="el-button__content__loader" light />
-      <iconEl v-if="suffixIcon" :icon="suffixIcon" class="el-button__content__suffix-icon" />
+      <loaderEl v-if="loading" class="button__content__loader" light />
+      <iconEl v-if="suffixIcon" :icon="suffixIcon" class="button__content__suffix-icon" />
     </span>
   </component>
 </template>
@@ -48,7 +49,8 @@ export default {
     icon: String,
     suffixIcon: String,
     secondary: Boolean,
-    round: Boolean
+    round: Boolean,
+    rounded: Boolean
   },
   computed: {
     componentType() {
@@ -62,13 +64,13 @@ export default {
     buttonType() {
       switch (this.type) {
         case 'success':
-          return `el-button--${this.secondary ? 'secondary' : 'primary'}--success`
+          return `button--${this.secondary ? 'secondary' : 'primary'}--success`
         case 'warning':
-          return `el-button--${this.secondary ? 'secondary' : 'primary'}--warning`
+          return `button--${this.secondary ? 'secondary' : 'primary'}--warning`
         case 'danger':
-          return `el-button--${this.secondary ? 'secondary' : 'primary'}--danger`
+          return `button--${this.secondary ? 'secondary' : 'primary'}--danger`
       }
-      return `el-button--${this.secondary ? 'secondary' : 'primary'}`
+      return `button--${this.secondary ? 'secondary' : 'primary'}`
     }
   },
   methods: {
@@ -82,7 +84,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.el-button {
+.button {
   position: relative;
 
   padding: $button-padding;
@@ -92,7 +94,7 @@ export default {
   @include when(loading) {
     cursor: not-allowed;
 
-    .el-button {
+    .button {
       &__content {
         span,
         &__icon,
@@ -139,24 +141,55 @@ export default {
       color: $success;
       border-color: $success;
       background: transparent;
+
+      .button {
+        &__content {
+          &__icon,
+          &__suffix-icon {
+            fill: $success;
+          }
+        }
+      }
     }
 
     &--warning {
       color: $warning;
       border-color: $warning;
       background: transparent;
+
+      .button {
+        &__content {
+          &__icon,
+          &__suffix-icon {
+            fill: $warning;
+          }
+        }
+      }
     }
 
     &--danger {
       color: $error;
       border-color: $error;
       background: transparent;
+
+      .button {
+        &__content {
+          &__icon,
+          &__suffix-icon {
+            fill: $error;
+          }
+        }
+      }
     }
   }
 
   &--round {
     padding: $button-padding--round;
     border-radius: 50%;
+  }
+
+  &--rounded {
+    border-radius: $border-radius-lg * 2;
   }
 
   &__content {

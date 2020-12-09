@@ -1,5 +1,5 @@
 <template>
-  <li class="el-option" @click.stop="selectOption">
+  <li class="option" @click.stop="selectOption">
     <slot />
   </li>
 </template>
@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.el-option {
+.option {
   padding: 0.7rem;
   text-align: left;
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="el-tag" @click="remove" :style="tagStyle" :class="{ 'state-disabled': disabled, 'state-error': error }">
+  <div class="tag" @click="remove" :style="tagStyle" :class="{ 'state-disabled': disabled, 'state-error': error }">
     <span>
       <slot />
     </span>
@@ -38,7 +38,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.el-tag {
+.tag {
   display: flex;
   align-items: center;
 

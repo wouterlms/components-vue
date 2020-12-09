@@ -1,16 +1,16 @@
 <template>
   <transition name="transition">
-    <div class="el-tooltip" v-click-outside="() => $emit('click-outside')">
+    <div class="tooltip" v-click-outside="() => $emit('click-outside')">
       <!-- content clone for shadow -->
-      <div class="el-tooltip__cloned-content" :style="menuStyle">
+      <div class="tooltip__cloned-content" :style="menuStyle">
         <slot />
       </div>
 
       <!-- arrow -->
-      <div class="el-tooltip__arrow" :style="arrowStyle"></div>
+      <div class="tooltip__arrow" :style="arrowStyle"></div>
 
       <!-- content -->
-      <div class="el-tooltip__content" :style="menuStyle">
+      <div class="tooltip__content" :style="menuStyle">
         <slot />
       </div>
     </div>
@@ -180,7 +180,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.el-tooltip {
+.tooltip {
   &__arrow {
     position: absolute;
     box-shadow: $box-shadow;

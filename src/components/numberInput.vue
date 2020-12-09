@@ -1,6 +1,6 @@
 <template>
   <inputEl
-    class="el-number-input"
+    class="number-input"
     type="number"
     v-model="actualValue"
     :disabled="disabled"
@@ -89,7 +89,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.el-number-input {
+.number-input {
   ::v-deep input {
     text-align: center;
   }

@@ -1,19 +1,19 @@
 <template>
   <div
-    class="el-input__wrapper"
+    class="input__wrapper"
     :class="{
       'state--disabled': disabled,
       'state--error': error
     }"
   >
-    <div class="el-input__wrapper__content" v-if="title || error">
-      <span v-if="title" class="el-input__wrapper__content__title">
+    <div class="input__wrapper__content" v-if="title || error">
+      <span v-if="title" class="input__wrapper__content__title">
         {{ title }}
       </span>
 
-      <div v-if="title && error" class="el-input__wrapper__content__divider"></div>
+      <div v-if="title && error" class="input__wrapper__content__divider"></div>
 
-      <span v-if="error" class="el-input__wrapper__content__error">
+      <span v-if="error" class="input__wrapper__content__error">
         {{ error }}
       </span>
     </div>
@@ -34,18 +34,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.el-input__wrapper {
+.input__wrapper {
   width: 100%;
 
   @include when(disabled) {
-    .el-input__wrapper__content {
+    .input__wrapper__content {
       cursor: not-allowed;
       color: $secondary-text;
     }
   }
 
   @include when(error) {
-    .el-input__wrapper__content {
+    .input__wrapper__content {
       color: $error;
     }
   }

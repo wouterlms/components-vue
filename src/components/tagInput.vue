@@ -1,12 +1,12 @@
 <template>
   <inputWrapper
-    class="el-tag-input"
+    class="tag-input"
     :class="{
       'state-disabled': disabled,
       'state-error': error
     }"
   >
-    <div class="el-tag-input__content" @click="handleContentClick">
+    <div class="tag-input__content" @click="handleContentClick">
       <slot name="prepend" />
       <inputEl
         ref="input"
@@ -23,7 +23,7 @@
           <slot name="prepend" />
 
           <!-- prefix icon -->
-          <div v-if="icon" class="el-tag-input__content__icon">
+          <div v-if="icon" class="tag-input__content__icon">
             <iconEl :icon="icon" />
           </div>
 
@@ -42,10 +42,10 @@
 
         <template slot="append">
           <!-- suffix icon -->
-          <div v-if="suffixIcon" class="el-tag-input__content__suffix-icon">
+          <div v-if="suffixIcon" class="tag-input__content__suffix-icon">
             <iconEl :icon="suffixIcon" />
           </div>
-          <div class="el-tag-input__content__loader" v-if="loading">
+          <div class="tag-input__content__loader" v-if="loading">
             <loaderEl />
           </div>
           <slot name="append" />
@@ -172,7 +172,7 @@ export default {
 
     onClick(e) {
       const classList = [...e.target.classList]
-      if (classList.includes('el-tag-input__content') || classList.includes('el-tag-input__content__icon')) {
+      if (classList.includes('tag-input__content') || classList.includes('tag-input__content__icon')) {
         this.$refs.input.focus()
       }
     }
@@ -181,9 +181,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.el-tag-input {
+.tag-input {
   @include when(disabled) {
-    .el-tag-input {
+    .tag-input {
       &__content {
         cursor: not-allowed;
 
@@ -196,7 +196,7 @@ export default {
   }
 
   @include when(error) {
-    .el-tag-input {
+    .tag-input {
       &__content {
         &__icon,
         &__suffix-icon {
@@ -253,7 +253,7 @@ export default {
       justify-content: center;
     }
 
-    ::v-deep .el-input {
+    ::v-deep .input {
       &__content {
         display: flex;
         align-items: center;

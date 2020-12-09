@@ -1,4 +1,4 @@
-# bem__test
+# vue components
 
 ## Project setup
 ```

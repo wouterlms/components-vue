@@ -154,7 +154,7 @@ export default {
         }
       }
       return {
-        transform: `translate(${x}, calc(50% + ${this.margin})) rotate(45deg)`
+        transform: `translate(${x}, calc(50% + ${this.margin} + 1px)) rotate(45deg)`
       }
     },
 

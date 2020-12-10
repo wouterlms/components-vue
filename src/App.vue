@@ -1,20 +1,6 @@
 <template>
   <div class="app">
-    <div>
-      <switchEl active-text="active" inactive-text="inactive" v-model="switchh" />
-    </div>
-    <div>
-      <checkboxEl disabled>checkbox</checkboxEl>
-    </div>
-    <div>
-      <radioEl v-model="radio" label="A" disabled>radio A</radioEl>
-      <radioEl v-model="radio" label="B">radio B</radioEl>
-    </div>
-
-    <div>
-      <buttonEl type="danger" size="small" secondary rounded>Cancel</buttonEl>
-      <buttonEl size="small" rounded>Confirm</buttonEl>
-    </div>
+    <fakeLoaderEl url="https://jsonplaceholder.typicode.com/photos" />
   </div>
 </template>
 
@@ -33,6 +19,7 @@ import tooltipEl from '@/components/tooltip'
 import optionEl from '@/components/option'
 import iconEl from '@/components/icon'
 import switchEl from '@/components/switch'
+import fakeLoaderEl from '@/components/fakeLoader'
 
 export default {
   components: {
@@ -49,7 +36,8 @@ export default {
     tooltipEl,
     optionEl,
     iconEl,
-    switchEl
+    switchEl,
+    fakeLoaderEl
   },
   data() {
     return {
@@ -57,11 +45,11 @@ export default {
       options: [
         {
           icon: 'add',
-          name: 'Option A'
+          name: 'I would like to stay here'
         },
         {
           icon: 'remove',
-          name: 'Option B'
+          name: 'I would like to go there!'
         }
       ],
       tags: ['tag A', 'tag B'],
@@ -94,5 +82,10 @@ body,
   & > div {
     margin-bottom: 0.5rem;
   }
+}
+
+.prepend-select {
+  border-right: 1px solid $border-color !important;
+  width: 300px !important;
 }
 </style>

@@ -12,7 +12,7 @@
     :error="error"
     :disabled="disabled"
   >
-    <label class="input__content">
+    <label class="input__content" :style="borderStyle">
       <!-- prepend -->
       <slot name="prepend" />
 
@@ -97,6 +97,10 @@ export default {
     height: {
       type: String,
       default: 'auto'
+    },
+    border: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -113,6 +117,11 @@ export default {
       return {
         resize: this.resize,
         height: this.height
+      }
+    },
+    borderStyle() {
+      return {
+        'border-width': this.border ? '1px' : '0'
       }
     },
     getSuffixIcon() {

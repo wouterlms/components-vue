@@ -15,6 +15,7 @@
       :disabled="disabled"
       :title="title"
       :error="error"
+      :border="border"
       suffix-icon="chevron-down"
       readonly
       v-click-outside="() => (showSelectMenu = false)"
@@ -42,7 +43,7 @@
         class="select__options"
       >
         <ul v-if="options && options.length">
-          <optionEl v-for="option of options" :key="option[label]" @click="select(option)">
+          <optionEl v-for="option of options" :value="option" :key="option[label]">
             {{ option[label] }}
           </optionEl>
         </ul>
@@ -80,7 +81,11 @@ export default {
       type: String,
       required: true
     },
-    disabled: Boolean
+    disabled: Boolean,
+    border: {
+      type: Boolean,
+      default: true
+    }
   },
   data() {
     return {

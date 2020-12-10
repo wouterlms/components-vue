@@ -44,9 +44,17 @@ export default {
       default: 1
     },
     // nog fixen
-    precision: {
-      type: Number,
-      default: 1
+    precision: Number
+  },
+  computed: {
+    computedNumber: {
+      get() {
+        return +this.actualValue
+      },
+
+      set(value) {
+        this.actualValue = this.precision ? parseFloat(value).toFixed(this.precision) : value
+      }
     }
   },
   data() {
@@ -54,21 +62,16 @@ export default {
       actualValue: this.value
     }
   },
-  watch: {
-    actualValue: function(newValue) {
-      this.$emit('input', newValue)
-    }
-  },
   methods: {
     decrease() {
       if (this.disabled) {
         return
       }
-      if (this.actualValue > this.min) {
-        if (this.actualValue > this.max) {
-          this.actualValue = this.max
+      if (this.computedNumber > this.min) {
+        if (this.computedNumber > this.max) {
+          this.computedNumber = this.max
         } else {
-          this.actualValue -= this.step
+          this.computedNumber -= this.step
         }
       }
     },
@@ -76,11 +79,11 @@ export default {
       if (this.disabled) {
         return
       }
-      if (this.actualValue < this.max) {
-        if (this.actualValue < this.min) {
-          this.actualValue = this.min
+      if (this.computedNumber < this.max) {
+        if (this.computedNumber < this.min) {
+          this.computedNumber = this.min
         } else {
-          this.actualValue += this.step
+          this.computedNumber += this.step
         }
       }
     }
@@ -109,6 +112,10 @@ export default {
     background: $input-background-color--disabled;
 
     user-select: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:nth-of-type(1) {
       border-radius: $border-radius 0 0 $border-radius;

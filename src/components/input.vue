@@ -193,6 +193,10 @@ export default {
 
       &__input {
         color: $input-color--disabled;
+
+        @include placeholder {
+          color: $input-placeholder-color--disabled;
+        }
       }
     }
   }

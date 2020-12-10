@@ -49,3 +49,4 @@ $input-transition: 0.3s;
 $input-background-color: $primary-light;
 $input-background-color--disabled: #f5f7fa;
 $input-placeholder-color: $placeholder-text;
+$input-placeholder-color--disabled: lighten($placeholder-text, 10);

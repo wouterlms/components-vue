@@ -40,7 +40,7 @@ export default {
   @include when(disabled) {
     .input__wrapper__content {
       cursor: not-allowed;
-      color: $secondary-text;
+      color: $input-color--disabled;
     }
   }
 

@@ -112,6 +112,7 @@ $transition: 0.3s;
 
 .button {
   position: relative;
+  display: inline-block;
 
   padding: $padding-y $padding-x;
   border-radius: $border-radius;

@@ -1,5 +1,5 @@
 <template>
-  <inputWrapperEl
+  <input-wrapper-element
     class="radio"
     :class="{
       'state-checked': isChecked,
@@ -14,25 +14,21 @@
         <!-- custom radio -->
         <span></span>
 
-        <!-- real radio -->
         <input type="radio" :checked="isChecked" @input="onInput" :disabled="disabled" />
       </span>
       <span class="radio__content__label">
-        <!-- <template v-if="label">
-          {{ label }}
-        </template> -->
         <slot />
       </span>
     </label>
-  </inputWrapperEl>
+  </input-wrapper-element>
 </template>
 
 <script>
-import inputWrapperEl from './inputWrapper'
+import inputWrapperElement from './inputWrapper'
 
 export default {
   components: {
-    inputWrapperEl
+    inputWrapperElement
   },
   props: {
     value: [String, Boolean],

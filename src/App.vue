@@ -2,7 +2,6 @@
   <div class="app">
     <notifications-element />
     <router-view></router-view>
-    <!-- <fake-loader-element :finished="finished"></fake-loader-element> -->
   </div>
 </template>
 
@@ -88,14 +87,10 @@ body,
 .app {
   font-family: 'Poppins', sans-serif;
   background: rgb(245, 250, 255);
-  padding: 10rem;
+  padding: 4rem;
   height: 100vh;
   width: 100%;
 
   box-sizing: border-box;
-
-  & > div {
-    margin-bottom: 0.5rem;
-  }
 }
 </style>

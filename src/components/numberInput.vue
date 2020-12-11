@@ -1,5 +1,5 @@
 <template>
-  <inputEl
+  <input-element
     class="number-input"
     type="text"
     v-model="computedValue"
@@ -18,17 +18,15 @@
         +
       </span>
     </template>
-  </inputEl>
+  </input-element>
 </template>
 
 <script>
-import inputEl from './input'
-import iconEl from './icon'
+import inputElement from './input'
 
 export default {
   components: {
-    inputEl,
-    iconEl
+    inputElement
   },
   props: {
     value: [Number, String],

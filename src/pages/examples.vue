@@ -82,12 +82,15 @@
 
     <modal-element :show="showModal" @close="showModal = false">
       <div class="modal">
-        <h1>A Random Modal</h1>
+        <h1>Hold on!</h1>
         <p>
-          Random modal with some content. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          Are you sure you want to unsubscribe? You won't be able to access any new content.
         </p>
 
-        <button-element secondary @click="showModal = false">Close</button-element>
+        <div class="modal__actions">
+          <button-element secondary @click="showModal = false">Cancel</button-element>
+          <button-element type="danger" @click="showModal = false">I'm sure</button-element>
+        </div>
       </div>
     </modal-element>
   </div>
@@ -180,14 +183,13 @@ export default {
       ],
       primaryActionType: null,
       secondaryActionType: null,
-      primaryActionTitle: null,
-      secondaryActionTitle: null,
+      primaryActionTitle: 'Install now',
+      secondaryActionTitle: 'Maybe later',
 
       useTimeout: false,
       timeout: 3000,
 
       submitLoading: false,
-      responseText: null,
       showModal: false
     }
   },
@@ -275,10 +277,18 @@ export default {
     line-height: 1.4;
   }
 
-  button {
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
     margin-top: 1rem;
-    margin-left: auto;
-    display: block;
+
+    button {
+      font-size: 90%;
+
+      &:last-of-type {
+        margin-left: 0.5rem;
+      }
+    }
   }
 }
 </style>

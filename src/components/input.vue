@@ -1,5 +1,5 @@
 <template>
-  <inputWrapper
+  <input-wrapper-element
     class="input"
     :class="{
       'state-disabled': disabled,
@@ -45,7 +45,7 @@
 
       <!-- suffix icon -->
       <div v-if="getSuffixIcon" class="input__content__suffix-icon" @click="handleSuffixIconClick">
-        <iconEl :icon="getSuffixIcon" />
+        <icon-element :icon="getSuffixIcon" />
       </div>
 
       <!-- append -->
@@ -53,22 +53,22 @@
 
       <!-- loader -->
       <div v-if="loading" class="input__content__loader">
-        <loaderEl radius="1.5rem" />
+        <loader-element radius="1.5rem" />
       </div>
     </label>
-  </inputWrapper>
+  </input-wrapper-element>
 </template>
 
 <script>
-import inputWrapper from './inputWrapper'
-import iconEl from './icon'
-import loaderEl from './loader'
+import inputWrapperElement from './inputWrapper'
+import iconElement from './icon'
+import loaderElement from './loader'
 
 export default {
   components: {
-    inputWrapper,
-    iconEl,
-    loaderEl
+    inputWrapperElement,
+    iconElement,
+    loaderElement
   },
   props: {
     // default

@@ -74,7 +74,7 @@ export default {
     left: 50%;
 
     min-width: 200px;
-    padding: 1.5em 2em 1.5em 1.5em;
+    padding: 2em 2em 1.5em 1.5em;
 
     background: $primary-light;
     border-radius: $border-radius-lg;

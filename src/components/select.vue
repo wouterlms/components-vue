@@ -8,7 +8,7 @@
       'state-focused': showSelectMenu
     }"
   >
-    <inputEl
+    <input-element
       :icon="icon"
       :placeholder="placeholder"
       :loading="loading"
@@ -31,10 +31,10 @@
       <template slot="append">
         <slot name="append" />
       </template>
-    </inputEl>
+    </input-element>
 
     <transition name="tooltip">
-      <tooltipEl
+      <tooltip-element
         v-if="showSelectMenu"
         arrow-align="right"
         arrow-offset=".8em"
@@ -43,31 +43,31 @@
         class="select__options"
       >
         <ul v-if="options && options.length">
-          <optionEl v-for="option of options" :value="option" :key="option[label]" :disabled="option.disabled">
+          <option-element v-for="option of options" :value="option" :key="option[label]" :disabled="option.disabled">
             {{ option[label] }}
-          </optionEl>
+          </option-element>
         </ul>
 
         <ul v-else>
           <slot />
         </ul>
-      </tooltipEl>
+      </tooltip-element>
     </transition>
   </div>
 </template>
 
 <script>
-import inputEl from './input'
-import tooltipEl from './tooltip'
-import optionEl from './option'
+import inputElement from './input'
+import tooltipElement from './tooltip'
+import optionElement from './option'
 
 export default {
   name: 'elSelect',
   componentName: 'elSelect',
   components: {
-    inputEl,
-    tooltipEl,
-    optionEl
+    inputElement,
+    tooltipElement,
+    optionElement
   },
   props: {
     options: Array,

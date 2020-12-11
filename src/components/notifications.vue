@@ -11,7 +11,7 @@
           <!-- row -->
           <div class="notification__row-header">
             <div class="notification__icon">
-              <el-icon v-if="notification.icon" :icon="notification.icon" />
+              <icon-element v-if="notification.icon" :icon="notification.icon" />
             </div>
 
             <span class="notification__title">
@@ -19,7 +19,7 @@
             </span>
 
             <div class="notification__close" role="button" @click="close(notification)">
-              <el-icon icon="close-bold" />
+              <icon-element icon="close-bold" />
             </div>
           </div>
 
@@ -33,22 +33,22 @@
           <!-- row -->
           <div class="notification__row-actions" v-if="notification.primaryAction || notification.secondaryAction">
             <span></span>
-            <div class="notification__actions">
-              <el-button
+            <div class="notification__actions" :style="actionButtonWrapperStyle(notification)">
+              <button-element
                 v-if="notification.primaryAction"
                 :type="notification.primaryAction.type"
                 @click="handlePrimaryActionClick(notification)"
               >
                 {{ notification.primaryAction.title }}
-              </el-button>
-              <el-button
+              </button-element>
+              <button-element
                 v-if="notification.secondaryAction"
                 :type="notification.secondaryAction.type"
                 secondary
                 @click="handleSecondaryActionClick(notification)"
               >
                 {{ notification.secondaryAction.title }}
-              </el-button>
+              </button-element>
             </div>
             <span></span>
           </div>
@@ -60,13 +60,13 @@
 
 <script>
 import Vue from 'vue'
-import elIcon from './icon'
-import elButton from './button'
+import iconElement from './icon'
+import buttonElement from './button'
 
 export default {
   components: {
-    elIcon,
-    elButton
+    iconElement,
+    buttonElement
   },
   data() {
     return {
@@ -122,6 +122,11 @@ export default {
     },
     addNotification(notification) {
       this.notifications.push({ ...notification, date: Date.now() })
+    },
+    actionButtonWrapperStyle(notification) {
+      return {
+        'grid-template-columns': notification.primaryAction && notification.secondaryAction ? '1fr 1fr' : '1fr'
+      }
     }
   }
 }
@@ -225,9 +230,6 @@ export default {
 
   &__actions {
     display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr));
-
     grid-gap: 0.5em;
 
     button {

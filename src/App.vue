@@ -1,43 +1,19 @@
 <template>
   <div class="app">
-    <fakeLoaderEl url="https://jsonplaceholder.typicode.com/photos" />
+    <notifications-element />
+    <router-view></router-view>
+    <!-- <fake-loader-element :finished="finished"></fake-loader-element> -->
   </div>
 </template>
 
 <script>
-import inputEl from '@/components/input'
-import loaderEl from '@/components/loader'
-import selectEl from '@/components/select'
-import tagInputEl from '@/components/tagInput'
-import checkboxEl from '@/components/checkbox'
-import radioEl from '@/components/radio'
-import modalEl from '@/components/modal'
-import buttonEl from '@/components/button'
-import dialogEl from '@/components/dialog'
-import numberInputEl from '@/components/numberInput'
-import tooltipEl from '@/components/tooltip'
-import optionEl from '@/components/option'
-import iconEl from '@/components/icon'
-import switchEl from '@/components/switch'
-import fakeLoaderEl from '@/components/fakeLoader'
+import notificationsElement from '@/components/notifications'
+import fakeLoaderElement from '@/components/fakeLoader'
 
 export default {
   components: {
-    inputEl,
-    loaderEl,
-    selectEl,
-    tagInputEl,
-    checkboxEl,
-    radioEl,
-    modalEl,
-    buttonEl,
-    dialogEl,
-    numberInputEl,
-    tooltipEl,
-    optionEl,
-    iconEl,
-    switchEl,
-    fakeLoaderEl
+    notificationsElement,
+    fakeLoaderElement
   },
   data() {
     return {
@@ -58,34 +34,68 @@ export default {
       radio: 'A',
       showModal: false,
       number: 0,
-      switchh: false
+      switchh: false,
+      isLoading: true,
+      show: false,
+      finished: false
     }
   },
-  mounted() {}
+  async mounted() {
+    // await new Promise(resolve => setTimeout(resolve, 1000))
+    // this.finished = true
+    // this.$notification({
+    //   title: 'Update available',
+    //   message: 'A new <b style="font-weight: 500;">sortware version</b> is available for download.',
+    //   icon: 'test/refresh',
+    //   duration: 0,
+    //   primaryAction: {
+    //     title: 'Update',
+    //     click: () => {}
+    //   },
+    //   secondaryAction: {
+    //     title: 'Not now',
+    //     click: () => {}
+    //   }
+    // })
+    // await new Promise(resolve => setTimeout(resolve, 500))
+    // this.$notification({
+    //   title: 'Upload successful',
+    //   message: '<b style="font-weight: 500">yeet.pdf</b> was uploaded successfully.',
+    //   type: 'success'
+    // })
+    // await new Promise(resolve => setTimeout(resolve, 500))
+    // this.$notification({
+    //   title: 'Privacy warning',
+    //   message: 'Someone is trying to login to your account.',
+    //   icon: 'test/padlock',
+    //   duration: 0,
+    //   type: 'error',
+    //   secondaryAction: {
+    //     title: 'Check Activity',
+    //     type: 'danger',
+    //     click: () => {}
+    //   }
+    // })
+  }
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-body {
-  background: rgb(245, 250, 255);
-  padding: 10rem;
-}
 
 html,
 body,
 .app {
   font-family: 'Poppins', sans-serif;
-  // display: flex;
+  background: rgb(245, 250, 255);
+  padding: 10rem;
+  height: 100vh;
+  width: 100%;
+
+  box-sizing: border-box;
 
   & > div {
     margin-bottom: 0.5rem;
   }
-}
-
-.prepend-select {
-  border-right: 1px solid $border-color !important;
-  width: 300px !important;
 }
 </style>

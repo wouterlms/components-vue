@@ -56,22 +56,22 @@ export default {
     display: flex;
     align-items: center;
 
-    font-size: 0.8rem;
+    font-size: 0.85em;
     text-align: left;
     color: $input-color;
 
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.4em;
 
     &__title,
     &__error {
-      transition: $input-transition;
+      // transition: $input-transition;
     }
 
     &__divider {
       width: 1px;
-      height: 10px;
+      height: 0.8em;
 
-      margin: 0 0.4rem;
+      margin: 0 0.4em;
 
       background: $error;
     }

@@ -50,7 +50,7 @@ export default {
 $switch-background-color--inactive: #dddfe6;
 $switch-background-color--active: $primary-accent;
 $switch-background-color--disabled: #edf2fc;
-$switch-width: 40px;
+$switch-width: 2.5em;
 $transition: 0.3s;
 
 .slider {
@@ -93,11 +93,11 @@ $transition: 0.3s;
   }
 
   &__inactive {
-    margin-right: 0.5rem;
+    margin-right: 0.5em;
   }
 
   &__active {
-    margin-left: 0.5rem;
+    margin-left: 0.5em;
   }
 
   &__slider {
@@ -114,11 +114,11 @@ $transition: 0.3s;
       content: '';
 
       position: absolute;
-      top: 1px;
-      left: 1px;
+      top: 0.063em;
+      left: 0.063em;
 
-      width: $switch-width / 2 - 2px;
-      height: $switch-width / 2 - 2px;
+      width: $switch-width / 2 - 0.126em;
+      height: $switch-width / 2 - 0.126em;
 
       border-radius: 50%;
 

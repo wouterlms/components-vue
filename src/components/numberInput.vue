@@ -1,9 +1,11 @@
 <template>
   <inputEl
     class="number-input"
-    type="number"
-    v-model="actualValue"
+    type="text"
+    v-model="computedValue"
     :disabled="disabled"
+    :title="title"
+    :error="error"
     :class="{ 'state-disabled': disabled }"
   >
     <template slot="prepend">
@@ -43,18 +45,25 @@ export default {
       type: Number,
       default: 1
     },
-    // nog fixen
+    title: String,
+    error: String,
+
+    prepend: String,
+    append: String,
     precision: Number
   },
   computed: {
-    computedNumber: {
+    computedValue: {
       get() {
-        return +this.actualValue
+        return `${this.prepend || ''}${this.actualValue}${this.append || ''}`
       },
 
       set(value) {
-        this.actualValue = this.precision ? parseFloat(value).toFixed(this.precision) : value
+        this.actualValue = this.precision ? parseFloat(value).toFixed(this.precision) : parseFloat(value)
       }
+    },
+    computedValueAsNumber() {
+      return parseFloat(this.computedValue.replace(/\D/g, ''))
     }
   },
   data() {
@@ -62,29 +71,38 @@ export default {
       actualValue: this.value
     }
   },
+  watch: {
+    actualValue: function(v) {
+      this.$emit('input', this.computedValueAsNumber)
+    }
+  },
   methods: {
     decrease() {
       if (this.disabled) {
         return
       }
-      if (this.computedNumber > this.min) {
-        if (this.computedNumber > this.max) {
-          this.computedNumber = this.max
+      if (this.computedValueAsNumber - this.step > this.min) {
+        if (this.computedValueAsNumber > this.max) {
+          this.computedValue = this.max
         } else {
-          this.computedNumber -= this.step
+          this.computedValue = this.computedValueAsNumber - this.step
         }
+      } else {
+        this.computedValue = this.min
       }
     },
     increase() {
       if (this.disabled) {
         return
       }
-      if (this.computedNumber < this.max) {
-        if (this.computedNumber < this.min) {
-          this.computedNumber = this.min
+      if (this.computedValueAsNumber + this.step < this.max) {
+        if (this.computedValueAsNumber < this.min) {
+          this.computedValue = this.min
         } else {
-          this.computedNumber += this.step
+          this.computedValue = this.computedValueAsNumber + this.step
         }
+      } else {
+        this.computedValue = this.max
       }
     }
   }

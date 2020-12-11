@@ -7,31 +7,51 @@
         class="notification"
         :class="[notificationType(notification), { 'notification--clickable': notification.click }]"
       >
-        <div class="notification__wrapper" @click="onClick(notification)">
-          <!-- icon -->
-          <iconEl class="notification__icon" v-if="notification.icon" :icon="notification.icon" />
+        <div class="notification__inner">
+          <!-- row -->
+          <div class="notification__row-header">
+            <div class="notification__icon">
+              <el-icon v-if="notification.icon" :icon="notification.icon" />
+            </div>
 
-          <!-- content -->
-          <div class="notification__content">
-            <!-- title -->
-            <span v-if="notification.title" class="notification__title">
+            <span class="notification__title">
               {{ notification.title }}
             </span>
 
-            <!-- message -->
-            <p v-if="notification.message" class="notification__message">
-              {{ notification.message }}
-            </p>
+            <div class="notification__close" role="button" @click="close(notification)">
+              <el-icon icon="close-bold" />
+            </div>
           </div>
 
-          <!-- close -->
-          <iconEl
-            class="notification__close"
-            icon="close"
-            width=".5rem"
-            height=".5rem"
-            @click.native.stop="close(notification)"
-          />
+          <!-- row -->
+          <div class="notification__row-message">
+            <span></span>
+            <p class="notification__message" v-html="notification.message"></p>
+            <span></span>
+          </div>
+
+          <!-- row -->
+          <div class="notification__row-actions" v-if="notification.primaryAction || notification.secondaryAction">
+            <span></span>
+            <div class="notification__actions">
+              <el-button
+                v-if="notification.primaryAction"
+                :type="notification.primaryAction.type"
+                @click="handlePrimaryActionClick(notification)"
+              >
+                {{ notification.primaryAction.title }}
+              </el-button>
+              <el-button
+                v-if="notification.secondaryAction"
+                :type="notification.secondaryAction.type"
+                secondary
+                @click="handleSecondaryActionClick(notification)"
+              >
+                {{ notification.secondaryAction.title }}
+              </el-button>
+            </div>
+            <span></span>
+          </div>
         </div>
       </li>
     </transition-group>
@@ -39,49 +59,41 @@
 </template>
 
 <script>
-import iconEl from './icon'
-
-/**
- * [string]   title
- * [string]   message (required)
- * [string]   icon
- * [string]   type - success | warning | error
- * [number]   date (required)
- * [number]   duration
- * [boolean]  dontClose
- * [function] click
- */
+import Vue from 'vue'
+import elIcon from './icon'
+import elButton from './button'
 
 export default {
   components: {
-    iconEl
-  },
-  props: {
-    notifications: {
-      // will be fetched from the store in an actual project
-      type: Array
-    }
+    elIcon,
+    elButton
   },
   data() {
     return {
-      prevLength: 0
+      prevLength: 0,
+      notifications: []
     }
   },
   watch: {
     notifications: {
       immediate: true,
-      handler(newValue) {
-        if (newValue.length > this.prevLength) {
-          const notification = [...newValue].pop()
+      handler(notifications) {
+        if (notifications.length > this.prevLength) {
+          const notification = [...notifications].pop()
 
-          if (!notification.dontClose) {
+          if (notification.timeout !== 0) {
             setTimeout(() => {
-              this.notifications.splice(0, 1)
-            }, notification.duration || 5000)
+              this.close(notification)
+            }, notification.timeout || 5000)
           }
         }
-        this.prevLength = newValue.length
+        this.prevLength = notifications.length
       }
+    }
+  },
+  created() {
+    Vue.prototype.$notification = notification => {
+      this.addNotification(notification)
     }
   },
   methods: {
@@ -97,13 +109,19 @@ export default {
           return 'notification--default'
       }
     },
-    onClick(notification) {
-      if (notification.click) {
-        notification.click()
-      }
+    handlePrimaryActionClick(notification) {
+      this.close(notification)
+      notification.primaryAction.click()
+    },
+    handleSecondaryActionClick(notification) {
+      this.close(notification)
+      notification.secondaryAction.click()
     },
     close(notification) {
       this.notifications.splice(this.notifications.indexOf(notification), 1)
+    },
+    addNotification(notification) {
+      this.notifications.push({ ...notification, date: Date.now() })
     }
   }
 }
@@ -114,8 +132,8 @@ export default {
   position: fixed;
   top: 0;
   right: 0;
-  top: 2rem;
-  right: 2rem;
+  top: 2em;
+  right: 2em;
 
   width: 400px;
 
@@ -124,79 +142,133 @@ export default {
 
 .notification {
   position: relative;
-  margin-bottom: 1.5rem;
+
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 1.5em;
 
   border-radius: $border-radius-lg;
   box-shadow: $box-shadow;
+  background: $primary-light;
+  color: $primary-text;
+
+  width: 100%;
 
   transition: 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.15);
 
-  &--clickable {
-    cursor: pointer;
+  &__inner {
+    padding: 1em;
   }
 
-  &--default {
-    background: $info-background;
-    color: $info;
+  &__row-header,
+  &__row-message,
+  &__row-actions {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 0.1fr 0.85fr 0.05fr;
   }
 
-  &--success {
-    color: $success;
-    fill: $success;
-    background: $success-background;
+  &__row-message {
+    margin-top: 0.3em;
   }
 
-  &--warning {
-    color: $warning;
-    fill: $warning;
-    background: $warning-background;
+  &__row-actions {
+    margin-top: 0.9em;
   }
 
-  &--error {
-    color: $error;
-    fill: $error;
-    background: $error-background;
-  }
-
-  &__wrapper {
+  &__icon {
     display: flex;
-    padding: 0.8rem;
-  }
+    align-items: center;
+    justify-content: center;
 
-  &__content {
-    width: 100%;
-    margin-left: 0.8rem;
-  }
+    width: 1.5em;
+    height: 1.5em;
 
-  &__title,
-  &__message {
-    display: block;
-    text-align: left;
+    background: $info-background;
+    border-radius: 50%;
+
+    svg {
+      fill: $info;
+
+      width: 50% !important;
+      height: 50% !important;
+    }
   }
 
   &__title {
-    font-size: 1.1rem;
-    font-weight: bold;
-
-    margin-bottom: 0.5rem;
+    display: block;
+    font-weight: 500;
   }
 
   &__message {
-    line-height: 1.3;
+    font-size: $font-sm;
+    color: $secondary-text;
+
+    font-weight: 300;
+    line-height: 1.4;
   }
 
   &__close {
-    position: absolute;
-    top: 0.6rem;
-    right: 0.6rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 
-    width: 0.6rem;
-    height: 0.6rem;
-
-    padding: 0.2rem;
-
-    fill: transparentize($primary-dark, 0.8);
     cursor: pointer;
+
+    svg {
+      width: 0.7em !important;
+      height: 0.7em !important;
+      fill: $secondary-text;
+    }
+  }
+
+  &__actions {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr));
+
+    grid-gap: 0.5em;
+
+    button {
+      font-size: 90%;
+    }
+  }
+
+  &--success {
+    .notification {
+      &__icon {
+        background: $success-background;
+
+        svg {
+          fill: $success;
+        }
+      }
+    }
+  }
+
+  &--warning {
+    .notification {
+      &__icon {
+        background: $warning-background;
+
+        svg {
+          fill: $warning;
+        }
+      }
+    }
+  }
+
+  &--error {
+    .notification {
+      &__icon {
+        background: $error-background;
+
+        svg {
+          fill: $error;
+        }
+      }
+    }
   }
 }
 
@@ -208,7 +280,7 @@ export default {
 
   &-enter {
     opacity: 0;
-    transform: translateY(50%);
+    transform: translateY(25%);
   }
 
   &-enter-active {
@@ -217,7 +289,7 @@ export default {
 
   &-leave-active {
     position: absolute;
-    transform: translateY(-100%) scale(1.05);
+    transform: translateY(-50%) scale(1.05);
     width: 100%;
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <inputWrapperEl
+  <input-wrapper-element
     class="checkbox"
     :error="error"
     :disabled="disabled"
@@ -12,7 +12,7 @@
     <label class="checkbox__content">
       <span class="checkbox__content__input">
         <span>
-          <iconEl icon="check" />
+          <icon-element icon="check" />
         </span>
         <input type="checkbox" :checked="isChecked" v-model="isChecked" :disabled="disabled" />
       </span>
@@ -20,17 +20,17 @@
         <slot />
       </span>
     </label>
-  </inputWrapperEl>
+  </input-wrapper-element>
 </template>
 
 <script>
-import inputWrapperEl from './inputWrapper'
-import iconEl from './icon'
+import inputWrapperElement from './inputWrapper'
+import iconElement from './icon'
 
 export default {
   components: {
-    inputWrapperEl,
-    iconEl
+    inputWrapperElement,
+    iconElement
   },
   props: {
     value: [Array, Boolean],

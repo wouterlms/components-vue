@@ -101,7 +101,8 @@ export default {
     border: {
       type: Boolean,
       default: true
-    }
+    },
+    size: String
   },
   computed: {
     componentType() {
@@ -112,6 +113,38 @@ export default {
         return this.showPassword ? 'text' : 'password'
       }
       return this.type
+    },
+    inputSize() {
+      switch (this.size) {
+        case 'large':
+          return {
+            '--padding-y': '',
+            '--padding-x': '',
+            '--font-size': '',
+            '--icon-size': ''
+          }
+        case 'small':
+          return {
+            '--padding-y': '',
+            '--padding-x': '',
+            '--font-size': '',
+            '--icon-size': ''
+          }
+        case 'extra-small':
+          return {
+            '--padding-y': '',
+            '--padding-x': '',
+            '--font-size': '',
+            '--icon-size': ''
+          }
+        default:
+          return {
+            '--padding-y': '',
+            '--padding-x': '',
+            '--font-size': '',
+            '--icon-size': ''
+          }
+      }
     },
     inputStyle() {
       return {
@@ -128,6 +161,7 @@ export default {
       return this.type === 'password' ? (this.showPassword ? 'eye-hide' : 'eye-view') : this.suffixIcon
     }
   },
+
   data() {
     return {
       isFocused: false,
@@ -229,7 +263,8 @@ export default {
       line-height: 0;
 
       svg {
-        width: 1rem;
+        width: 0.8em !important;
+        height: 0.8em !important;
       }
     }
 
@@ -271,7 +306,7 @@ export default {
 
     &__loader {
       height: 100%;
-      width: 2.5rem;
+      width: 2.5em;
 
       background: $input-background-color;
       border-radius: $border-radius;

@@ -9,27 +9,30 @@
         fill="none"
         stroke-width="2"
         stroke-miterlimit="10"
-        :style="{
-          stroke: light ? 'white' : ''
-        }"
       />
     </svg>
   </div>
 </template>
 
 <script>
+import variables from '@/assets/scss/_variables.scss'
+
 export default {
   props: {
     radius: {
       type: String,
       default: '20px'
     },
-    light: Boolean
+    color: {
+      type: String,
+      default: variables.primaryAccent
+    }
   },
   computed: {
     style() {
       return {
-        '--radius': this.radius
+        '--radius': this.radius,
+        '--stroke': this.color
       }
     }
   }
@@ -66,7 +69,7 @@ export default {
       stroke-dashoffset: 0;
       animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
       stroke-linecap: round;
-      stroke: $primary-accent;
+      stroke: var(--stroke);
     }
   }
 }

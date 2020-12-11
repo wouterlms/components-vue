@@ -37,13 +37,13 @@
       <tooltipEl
         v-if="showSelectMenu"
         arrow-align="right"
-        arrow-offset=".9rem"
-        margin="10px"
+        arrow-offset=".8em"
+        margin="0.625em"
         width="100%"
         class="select__options"
       >
         <ul v-if="options && options.length">
-          <optionEl v-for="option of options" :value="option" :key="option[label]">
+          <optionEl v-for="option of options" :value="option" :key="option[label]" :disabled="option.disabled">
             {{ option[label] }}
           </optionEl>
         </ul>
@@ -124,7 +124,7 @@ export default {
   line-height: 1;
 
   ::v-deep .input__content__suffix-icon svg {
-    width: 0.8rem !important;
+    width: 0.8em !important;
     transition: 0.3s;
   }
 
@@ -165,6 +165,7 @@ export default {
   }
   &-leave-active {
     opacity: 1;
+    pointer-events: none;
   }
   &-leave-to {
     opacity: 0;

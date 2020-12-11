@@ -7,22 +7,12 @@
 
     <transition name="modal">
       <div v-if="show" class="modal__content">
-        <div v-if="title || (showClose && !requiresAction)" class="modal__content__header">
-          <!-- title -->
-          <span v-if="title" class="modal__content__header__title">
-            {{ title }}
-          </span>
-          <!-- empty span for spacing -->
-          <span v-else></span>
-
-          <!-- close -->
-          <iconEl
-            v-if="showClose && !requiresAction"
-            @click.native="close"
-            icon="close"
-            class="modal__content__header__close"
-          />
-        </div>
+        <icon-element
+          v-if="showClose && !requiresAction"
+          @click.native="close"
+          icon="close"
+          class="modal__content__close"
+        />
 
         <!-- slot content -->
         <slot />
@@ -32,15 +22,14 @@
 </template>
 
 <script>
-import iconEl from './icon'
+import iconElement from './icon'
 
 export default {
   components: {
-    iconEl
+    iconElement
   },
   props: {
     requiresAction: Boolean,
-    title: String,
     showClose: {
       type: Boolean,
       default: true
@@ -65,8 +54,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$modal-padding: 1rem;
-
 .modal {
   position: relative;
   z-index: 99;
@@ -87,31 +74,24 @@ $modal-padding: 1rem;
     left: 50%;
 
     min-width: 200px;
+    padding: 1.5em 2em 1.5em 1.5em;
 
     background: $primary-light;
-    padding: $modal-padding;
-    border-radius: $border-radius;
+    border-radius: $border-radius-lg;
+    box-shadow: $box-shadow;
 
     transform: translate(-50%, -50%);
 
-    &__header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    &__close {
+      position: absolute;
+      top: 0.8em;
+      right: 0.8em;
 
-      margin-bottom: 1em;
+      width: 0.6rem !important;
+      height: 0.7rem !important;
 
-      &__title {
-        font-weight: 500;
-      }
-
-      &__close {
-        width: 0.8rem !important;
-        height: 0.8rem !important;
-
-        cursor: pointer;
-        user-select: none;
-      }
+      cursor: pointer;
+      user-select: none;
     }
   }
 }

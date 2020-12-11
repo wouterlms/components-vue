@@ -47,12 +47,12 @@ export default {
 
     arrowSize: {
       type: String,
-      default: '10px'
+      default: '0.625em'
     },
 
     arrowBorderRadius: {
       type: String,
-      default: '3px'
+      default: '0.150em'
     },
 
     arrowAlign: {

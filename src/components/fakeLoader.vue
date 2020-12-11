@@ -11,10 +11,8 @@
 <script>
 export default {
   props: {
-    url: {
-      type: String,
-      required: true
-    }
+    url: String,
+    finished: Boolean
   },
   data() {
     return {
@@ -34,18 +32,41 @@ export default {
   watch: {
     url: {
       immediate: true,
-      handler(newValue) {
-        this.fetch(newValue)
+      handler(url) {
+        if (url) {
+          this.fetch(url)
+        }
       }
+    },
+    finished: function(isFinished) {
+      isFinished ? this.finishLoading() : this.increaseProgress()
+    }
+  },
+  created() {
+    if (!this.url) {
+      this.increaseProgress()
     }
   },
   methods: {
-    async fetch(url) {
+    increaseProgress() {
       this.progress = 0
 
       this.interval = setInterval(() => {
         this.progress = this.progress < 40 ? (this.progress += 1) : (this.progress += 0.2)
       }, 50)
+    },
+    finishLoading() {
+      clearInterval(this.interval)
+      this.progress = 100
+
+      setTimeout(() => {
+        setTimeout(() => {
+          this.$emit('finished')
+        }, 200)
+      }, this.transitionSpeed)
+    },
+    async fetch(url) {
+      this.increaseProgress()
 
       // await new Promise(res => setTimeout(() => res(), 2000))
 
@@ -53,14 +74,7 @@ export default {
         .then(res => this.$emit('response', res))
         .catch(err => this.$emit('error', err))
         .finally(() => {
-          clearInterval(this.interval)
-          this.progress = 100
-
-          setTimeout(() => {
-            setTimeout(() => {
-              this.$emit('finished')
-            }, 200)
-          }, this.transitionSpeed)
+          this.finishLoading()
         })
     }
   }

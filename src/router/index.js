@@ -1,14 +1,27 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 
-Vue.use(VueRouter);
+import index from '@/pages/index'
+import examples from '@/pages/examples'
 
-const routes = [];
+Vue.use(VueRouter)
+
+const routes = [
+  {
+    path: '/',
+    component: index
+  },
+
+  {
+    path: '/examples',
+    component: examples
+  }
+]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes,
-});
+  routes
+})
 
-export default router;
+export default router

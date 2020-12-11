@@ -4,6 +4,7 @@
     :type="nativeType"
     :to="to"
     :href="href"
+    :disabled="disabled || loading"
     @click="handleClick"
     class="button"
     :class="[
@@ -15,27 +16,27 @@
         'button--rounded': rounded
       }
     ]"
-    :style="buttonSize"
   >
     <span class="button__content">
-      <iconEl v-if="icon" :icon="icon" class="button__content__icon" />
+      <icon-element v-if="icon" :icon="icon" class="button__content__icon" />
       <span v-if="$slots.default">
         <slot />
       </span>
-      <loaderEl v-if="loading" class="button__content__loader" light />
-      <iconEl v-if="suffixIcon" :icon="suffixIcon" class="button__content__suffix-icon" />
+      <loader-element v-if="loading" class="button__content__loader" :color="loaderColor" />
+      <icon-element v-if="suffixIcon" :icon="suffixIcon" class="button__content__suffix-icon" />
     </span>
   </component>
 </template>
 
 <script>
-import loaderEl from './loader'
-import iconEl from './icon'
+import loaderElement from './loader'
+import iconElement from './icon'
+import variables from '@/assets/scss/_variables.scss'
 
 export default {
   components: {
-    loaderEl,
-    iconEl
+    loaderElement,
+    iconElement
   },
   props: {
     nativeType: {
@@ -74,29 +75,20 @@ export default {
       }
       return `button--${this.secondary ? 'secondary' : 'primary'}`
     },
-    buttonSize() {
-      switch (this.size) {
-        case 'extra-small':
-          return {
-            '--padding-y': this.round ? '7px' : '7px',
-            '--padding-x': this.round ? '7px' : '12px',
-            '--font-size': '.8rem',
-            '--icon-size': '.6rem'
-          }
-        case 'small':
-          return {
-            '--padding-y': this.round ? '9px' : '9px',
-            '--padding-x': this.round ? '9px' : '15px',
-            '--font-size': '.9rem',
-            '--icon-size': '.7rem'
-          }
+    loaderColor() {
+      if (this.secondary) {
+        switch (this.type) {
+          case 'success':
+            return variables.success
+          case 'warning':
+            return variables.warning
+          case 'danger':
+            return variables.error
+          default:
+            return variables.primaryAccent
+        }
       }
-      return {
-        '--padding-y': this.round ? '12px' : '12px',
-        '--padding-x': this.round ? '12px' : '20px',
-        '--font-size': '1rem',
-        '--icon-size': '.8rem'
-      }
+      return variables.primaryLight
     }
   },
   methods: {
@@ -110,20 +102,23 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// $button-padding-y: 12px;
-// $button-padding-x: 20px;
-// $button-padding--round: 10px;
 $button-color: $primary-light;
 $button-background: $primary-accent;
+
+$padding-y: 0.8em;
+$padding-x: 1.2em;
+
+$transition: 0.3s;
 
 .button {
   position: relative;
 
-  padding: var(--padding-y) var(--padding-x);
+  padding: $padding-y $padding-x;
   border-radius: $border-radius;
   border: 1px solid $primary-accent;
 
   font-family: inherit;
+  transition: 0.3s;
 
   @include when(loading) {
     cursor: not-allowed;
@@ -141,7 +136,7 @@ $button-background: $primary-accent;
 
   @include when(disabled) {
     cursor: not-allowed;
-    background: transparentize($button-background, 0.5);
+    opacity: 0.5;
   }
 
   &--primary {
@@ -170,6 +165,15 @@ $button-background: $primary-accent;
   &--secondary {
     color: $primary-accent;
     background: transparent;
+
+    .button {
+      &__content {
+        &__icon,
+        &__suffix-icon {
+          fill: $primary-accent;
+        }
+      }
+    }
 
     &--success {
       color: $success;
@@ -218,7 +222,7 @@ $button-background: $primary-accent;
   }
 
   &--round {
-    padding: var(--padding-x);
+    padding: $padding-x;
     border-radius: 50%;
   }
 
@@ -234,23 +238,23 @@ $button-background: $primary-accent;
 
     span {
       font-weight: 500;
-      font-size: var(--font-size);
+      font-size: 1em;
       white-space: nowrap;
     }
 
     &__icon,
     &__suffix-icon {
       fill: $button-color;
-      width: var(--icon-size) !important;
-      height: var(--icon-size) !important;
+      width: 0.9em !important;
+      height: 0.9em !important;
     }
 
     &__icon ~ span {
-      padding-left: calc(var(--padding-x) / 2);
+      padding-left: calc(#{$padding-x} / 2);
     }
 
     span + &__suffix-icon {
-      padding-left: calc(var(--padding-x) / 2);
+      padding-left: calc(#{$padding-x} / 2);
     }
 
     &__loader {
@@ -259,10 +263,6 @@ $button-background: $primary-accent;
       left: 50%;
 
       transform: translate(-50%, -50%);
-
-      ::v-deep path {
-        stroke: $primary-light !important;
-      }
     }
   }
 }

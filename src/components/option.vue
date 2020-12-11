@@ -1,5 +1,11 @@
 <template>
-  <li class="option" @click.stop="selectOption">
+  <li
+    class="option"
+    @click.stop="selectOption"
+    :class="{
+      'state-disabled': disabled
+    }"
+  >
     <slot />
   </li>
 </template>
@@ -13,29 +19,45 @@ export default {
     value: Object
   },
 
+  computed: {
+    disabled() {
+      return this.value.disabled
+    }
+  },
+
   methods: {
     selectOption() {
-      this.dispatch('elSelect', 'handleOptionClick', this.value)
+      if (!this.disabled) {
+        this.dispatch('elSelect', 'handleOptionClick', this.value)
+      }
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-$select-option-background: $primary-light;
-$select-option-background--hover: #f5f7fa;
-
 .option {
-  padding: 0.7rem;
+  padding: 0.9em;
   text-align: left;
 
-  background: $select-option-background;
+  background: $primary-light;
+  color: $primary-text;
   transition: 0.3s;
 
   cursor: pointer;
+  user-select: none;
+
+  @include when(disabled) {
+    color: $input-color--disabled;
+    cursor: not-allowed;
+
+    &:hover {
+      background: inherit;
+    }
+  }
 
   &:hover {
-    background: $select-option-background--hover;
+    background: #f5f7fa;
   }
 }
 </style>

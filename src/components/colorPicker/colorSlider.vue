@@ -12,7 +12,7 @@
 <script>
 export default {
   props: {
-    initialColor: Object
+    color: Object
   },
   computed: {},
   data() {
@@ -26,11 +26,14 @@ export default {
   watch: {
     hue: function(hue) {
       this.$emit('hue', hue)
+    },
+    color: function() {
+      // this.setColor()
     }
   },
   mounted() {
     this.slider = this.$refs.slider
-    this.setInitialValue()
+    this.setColor()
 
     document.addEventListener('mouseup', this.handleMouseUp)
   },
@@ -38,9 +41,9 @@ export default {
     document.removeEventListener('mouseup', this.handleMouseUp)
   },
   methods: {
-    setInitialValue() {
-      this.cursorTop = (this.slider.getBoundingClientRect().height / 360) * this.initialColor.h
-      this.hue = this.initialColor.h
+    setColor() {
+      this.cursorTop = (this.slider.getBoundingClientRect().height / 360) * this.color.h
+      this.hue = this.color.h
     },
     handleMouseDown() {
       this.isMouseDown = true

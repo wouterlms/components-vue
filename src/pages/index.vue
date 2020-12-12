@@ -1,30 +1,23 @@
 <template>
   <div>
+    <notifications-element />
     <button-element to="/examples">examples</button-element>
-    <div style="padding: 10rem; padding-left: 20rem;">
-      {{ color }}
-      <color-picker v-model="color"></color-picker>
-    </div>
   </div>
 </template>
 
 <script>
+import notificationsElement from '@/components/notifications'
 import buttonElement from '@/components/button'
-import colorPicker from '@/components/colorPicker'
-
-import variables from '@/assets/scss/_variables.scss'
 
 export default {
   components: {
     buttonElement,
-    colorPicker
+    notificationsElement
   },
   data() {
-    return {
-      color: variables.primaryAccent
-    }
+    return {}
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss"></style>

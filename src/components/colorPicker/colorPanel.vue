@@ -24,7 +24,7 @@ import { hsvToRgb } from './color'
 export default {
   props: {
     hue: Number,
-    initialColor: Object
+    color: Object
   },
   computed: {},
   data() {
@@ -50,26 +50,30 @@ export default {
     },
     saturation: function() {
       this.rgb = hsvToRgb(this.hue, this.saturation, this.value)
+    },
+    color: {
+      handler(rgb) {
+        // this.setColor()
+      }
     }
   },
 
   mounted() {
     this.panel = this.$refs.panel
-    this.setInitialValue()
+    this.setColor() // can't use immediate watcher because panel is not initialised
     document.addEventListener('mouseup', this.handleMouseUp)
   },
   beforeDestroy() {
     document.removeEventListener('mouseup', this.handleMouseUp)
   },
   methods: {
-    setInitialValue() {
+    setColor() {
       const rect = this.panel.getBoundingClientRect()
 
-      this.cursorLeft = (this.initialColor.s * rect.width) / 100
-      this.cursorTop = ((100 - this.initialColor.v) * rect.height) / 100
-
-      this.saturation = this.initialColor.s
-      this.value = this.initialColor.v
+      this.cursorLeft = (this.color.s * rect.width) / 100
+      this.cursorTop = ((100 - this.color.v) * rect.height) / 100
+      this.saturation = this.color.s
+      this.value = this.color.v
     },
     handleMouseDown() {
       this.isMouseDown = true

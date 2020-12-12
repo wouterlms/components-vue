@@ -29,25 +29,43 @@ export default {
     inputElement
   },
   props: {
+    /** Input value */
     value: [Number, String],
+
+    /** Disable input */
     disabled: Boolean,
+
+    /** Minimum value */
     min: {
       type: Number,
       default: -Infinity
     },
+
+    /** Maximum value */
     max: {
       type: Number,
       default: Infinity
     },
+
+    /** Incremental step */
     step: {
       type: Number,
       default: 1
     },
+
+    /** Title */
     title: String,
+
+    /** Error */
     error: String,
 
+    /** Prepend */
     prepend: String,
+
+    /** Append */
     append: String,
+
+    /** Precision of input value */
     precision: Number
   },
   computed: {

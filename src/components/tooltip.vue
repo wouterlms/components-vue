@@ -18,51 +18,56 @@
 <script>
 export default {
   props: {
+    /** Position of tooltip - 'top' | 'bottom' */
     position: {
       type: String,
-      default: 'bottom',
-      note: 'position of tooltip, top | bottom'
+      default: 'bottom'
     },
 
+    /** Margin between tooltip and relative parent */
     margin: {
       type: String,
-      default: '0px',
-      note: 'margin between tooltip & parent'
+      default: '0px'
     },
 
+    /** Offset of content to either left or right */
     offset: {
       type: String,
-      default: '0px',
-      note: 'offset of content to left or right'
+      default: '0px'
     },
 
+    /** Alignment of tooltip - 'left' | 'right' | 'center' */
     align: {
       type: String,
-      default: 'center',
-      note: 'alignment of tooltip, left | right | center'
+      default: 'center'
     },
 
+    /** Arrow size */
     arrowSize: {
       type: String,
       default: '0.625em'
     },
 
+    /** Arrow border radius */
     arrowBorderRadius: {
       type: String,
       default: '0.150em'
     },
 
+    /** Alignment of arrow - 'left' | 'right' | 'center' */
     arrowAlign: {
       type: String,
       default: 'center',
       note: 'arrow alignment, left | right | center'
     },
 
+    /** Offset of arrow to either left or right */
     arrowOffset: {
       type: String,
       default: '0px'
     },
 
+    /** Tooltip width, 100% = fit to parent */
     width: {
       type: String,
       default: 'auto'

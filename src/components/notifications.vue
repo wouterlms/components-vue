@@ -92,7 +92,7 @@ export default {
     }
   },
   created() {
-    Vue.prototype.$notification = notification => {
+    Vue.prototype.$notification = (notification) => {
       this.addNotification(notification)
     }
   },
@@ -223,7 +223,7 @@ export default {
 
     svg {
       width: 0.7em !important;
-      height: 0.7em !important;
+      height: 0.6em !important;
       fill: $secondary-text;
     }
   }

@@ -5,17 +5,22 @@
 <script>
 export default {
   props: {
+    /** icon, default path is @/assets/svg */
     icon: {
       type: String,
       required: true
     },
+
+    /** icon width */
     width: {
       type: String,
-      default: '1rem'
+      default: '1em'
     },
+
+    /** icon height */
     height: {
       type: String,
-      default: '1rem'
+      default: '1em'
     }
   },
 

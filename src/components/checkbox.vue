@@ -33,9 +33,16 @@ export default {
     iconElement
   },
   props: {
+    /** Input value */
     value: [Array, Boolean],
+
+    /** Value of checkbox if used with array value> */
     label: String,
+
+    /** Disable the checkbox */
     disabled: Boolean,
+
+    /** Set error - also passed to <input-wrapper-element> */
     error: String
   },
   computed: {

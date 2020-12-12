@@ -31,9 +31,16 @@ export default {
     inputWrapperElement
   },
   props: {
+    /** Input value */
     value: [String, Boolean],
+
+    /** Value of radio */
     label: String,
+
+    /** Disable radio */
     disabled: Boolean,
+
+    /** Error */
     error: String
   },
   computed: {

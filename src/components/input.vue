@@ -40,7 +40,7 @@
         @input="onInput"
         @focus="onFocus"
         @blur="onBlur"
-        @keydown="e => $emit('keydown', e)"
+        @keydown="(e) => $emit('keydown', e)"
       />
 
       <!-- suffix icon -->
@@ -53,7 +53,7 @@
 
       <!-- loader -->
       <div v-if="loading" class="input__content__loader">
-        <loader-element radius="1.5rem" />
+        <loader-element radius="1.3em" />
       </div>
     </label>
   </input-wrapper-element>
@@ -71,38 +71,68 @@ export default {
     loaderElement
   },
   props: {
-    // default
+    /** Input type - 'text' | 'password' | 'number' | 'textarea' */
     type: {
       type: String,
       default: 'text'
     },
+
+    /** Native input placeholder */
     placeholder: String,
+
+    /** Input value */
     value: [String, Number],
+
+    /** Native spellcheck */
     spellcheck: Boolean,
+
+    /** Textarea resize - 'none' | 'both' | 'horizontal' | 'vertical' */
     resize: String,
-    form: String,
+
+    /** Disable the input */
     disabled: Boolean,
+
+    /** Native readonly */
     readonly: Boolean,
+
+    /** Minimum input length */
     minlength: Number,
+
+    /** Maximum input length */
     maxlength: Number,
+
+    /** Minimum number (type = number) */
     min: Number,
+
+    /** Maximum number (type = number) */
     max: Number,
 
-    // custom
-    title: String,
+    /** Input icon */
     icon: String,
+
+    /** Input suffix icon */
     suffixIcon: String,
-    error: String,
+
+    /** Show input loader */
     loading: Boolean,
+
+    /** Textarea height */
     height: {
       type: String,
       default: 'auto'
     },
+
+    /** Show border */
     border: {
       type: Boolean,
       default: true
     },
-    size: String
+
+    /** Input title - passed to <input-wrapper-element> */
+    title: String,
+
+    /** Input error - also passed to <input-wrapper-element> */
+    error: String
   },
   computed: {
     componentType() {
@@ -113,38 +143,6 @@ export default {
         return this.showPassword ? 'text' : 'password'
       }
       return this.type
-    },
-    inputSize() {
-      switch (this.size) {
-        case 'large':
-          return {
-            '--padding-y': '',
-            '--padding-x': '',
-            '--font-size': '',
-            '--icon-size': ''
-          }
-        case 'small':
-          return {
-            '--padding-y': '',
-            '--padding-x': '',
-            '--font-size': '',
-            '--icon-size': ''
-          }
-        case 'extra-small':
-          return {
-            '--padding-y': '',
-            '--padding-x': '',
-            '--font-size': '',
-            '--icon-size': ''
-          }
-        default:
-          return {
-            '--padding-y': '',
-            '--padding-x': '',
-            '--font-size': '',
-            '--icon-size': ''
-          }
-      }
     },
     inputStyle() {
       return {
@@ -263,8 +261,8 @@ export default {
       line-height: 0;
 
       svg {
-        width: 0.8em !important;
-        height: 0.8em !important;
+        width: 0.9em !important;
+        height: 0.9em !important;
       }
     }
 

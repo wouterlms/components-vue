@@ -11,8 +11,13 @@
 <script>
 export default {
   props: {
+    /** url of request */
     url: String,
+
+    /** wether loading has started, used without url prop */
     started: Boolean,
+
+    /** wether loading has finished, used without url prop */
     finished: Boolean
   },
   data() {
@@ -55,6 +60,7 @@ export default {
   },
   methods: {
     increaseProgress() {
+      this.transitionSpeed = 1000
       this.progress = 0
 
       this.interval = setInterval(() => {
@@ -69,14 +75,10 @@ export default {
       setTimeout(() => {
         setTimeout(() => {
           this.$emit('finished')
-
-          const transitionSpeed = this.transitionSpeed
-
           this.transitionSpeed = 0
-          this.progress = 0
 
           this.$nextTick(() => {
-            this.transitionSpeed = transitionSpeed
+            this.progress = 0
           })
         }, 200)
       }, this.transitionSpeed)

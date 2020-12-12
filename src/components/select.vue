@@ -73,18 +73,37 @@ export default {
   },
   mixins: [emitter],
   props: {
+    /** Options (simple), for advanced options use the <option> component */
     options: Array,
+
+    /** Select value */
     value: Object,
+
+    /** Native placeholder */
     placeholder: String,
+
+    /** Icon */
     icon: String,
+
+    /** Show select loader */
     loading: Boolean,
+
+    /** Title */
     title: String,
+
+    /** Error */
     error: String,
+
+    /** Property used to display */
     label: {
       type: String,
       required: true
     },
+
+    /** Disable the select input */
     disabled: Boolean,
+
+    /** Show border */
     border: {
       type: Boolean,
       default: true
@@ -121,7 +140,7 @@ export default {
   },
   methods: {
     onInputClick() {
-      this.showSelectMenu = this.disabled ? false : !this.showSelectMenu
+      this.showSelectMenu = this.disabled || this.loading ? false : !this.showSelectMenu
     },
     select(option) {
       this.$emit('input', option)

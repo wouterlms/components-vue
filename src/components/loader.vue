@@ -19,10 +19,13 @@ import variables from '@/assets/scss/_variables.scss'
 
 export default {
   props: {
+    /** Radius */
     radius: {
       type: String,
       default: '1.25em'
     },
+
+    /** Color */
     color: {
       type: String,
       default: variables.primaryAccent

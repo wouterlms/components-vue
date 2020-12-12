@@ -1,10 +1,6 @@
 <template>
   <div>
-    <router-link to="/examples">examples</router-link>
-
-    <div style="width: 350px; margin-top: 50px;">
-      <button-element>button</button-element>
-    </div>
+    <button-element to="/examples">View Examples</button-element>
   </div>
 </template>
 

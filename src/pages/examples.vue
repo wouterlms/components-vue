@@ -236,6 +236,26 @@ export default {
       //   !this.secondaryActionType ||
       //   !this.secondaryActionTitle
       // )
+    },
+    primaryAction() {
+      if (this.primaryActionTitle && this.primaryActionType) {
+        return {
+          title: this.primaryActionTitle,
+          type: this.primaryActionType.type.toLowerCase(),
+          click: () => {}
+        }
+      }
+      return null
+    },
+    secondaryAction() {
+      if (this.secondaryActionTitle && this.secondaryActionType) {
+        return {
+          title: this.secondaryActionTitle,
+          type: this.secondaryActionType.type.toLowerCase(),
+          click: () => {}
+        }
+      }
+      return null
     }
   },
   methods: {
@@ -251,20 +271,8 @@ export default {
         message: this.message,
         type: this.notificationType?.color,
         icon: this.icon?.path,
-        primaryAction: {
-          title: this.primaryActionTitle,
-          type: this.primaryActionType?.type.toLowerCase(),
-          click: () => {
-            this.responseText = 'You clicked the primary option'
-          }
-        },
-        secondaryAction: {
-          title: this.secondaryActionTitle,
-          type: this.secondaryActionType?.type.toLowerCase(),
-          click: () => {
-            this.responseText = 'You clicked the secondary option'
-          }
-        },
+        primaryAction: this.primaryAction,
+        secondaryAction: this.secondaryAction,
         timeout: this.useTimeout ? this.timeout : 0
       })
     }

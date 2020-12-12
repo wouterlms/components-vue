@@ -29,11 +29,16 @@ export default {
     iconElement
   },
   props: {
+    /** If set to true, modal won't close when clicking outside */
     requiresAction: Boolean,
+
+    /** Show close icon */
     showClose: {
       type: Boolean,
       default: true
     },
+
+    /** Show modal */
     show: Boolean
   },
   data() {

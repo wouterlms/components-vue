@@ -3,6 +3,7 @@
     class="slider"
     :class="{
       'state-switched': isSwitched,
+      'state-error': error,
       'state-disabled': disabled
     }"
   >
@@ -25,10 +26,20 @@
 <script>
 export default {
   props: {
+    /** Input value */
     value: Boolean,
+
+    /** Disable switch */
     disabled: Boolean,
+
+    /** Text used on inactive side */
+    inactiveText: String,
+
+    /** Text used on active side */
     activeText: String,
-    inactiveText: String
+
+    /** Error */
+    error: String
   },
   computed: {
     isSwitched: {
@@ -72,6 +83,15 @@ $transition: 0.3s;
     }
   }
 
+  @include when(error) {
+    .slider {
+      &__active,
+      &__inactive {
+        color: $error;
+      }
+    }
+  }
+
   @include when(disabled) {
     cursor: not-allowed;
 
@@ -90,6 +110,7 @@ $transition: 0.3s;
   &__active,
   &__inactive {
     font-weight: 500;
+    color: $primary-text;
   }
 
   &__inactive {

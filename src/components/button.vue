@@ -39,21 +39,41 @@ export default {
     iconElement
   },
   props: {
+    /** Native button type - 'button' | 'submit' | 'reset' | 'menu' */
     nativeType: {
       type: String,
       default: 'button'
     },
+
+    /** Button type - 'success' | 'warning' | 'danger' | '' */
     type: String,
+
+    /** Disable the button */
     disabled: Boolean,
+
+    /** Router link to */
     to: String,
+
+    /** Anchor tag href */
     href: String,
+
+    /** Show button loader */
     loading: Boolean,
+
+    /** Button icon */
     icon: String,
+
+    /** Button suffix icon */
     suffixIcon: String,
+
+    /** Secondary button (styling) */
     secondary: Boolean,
-    round: Boolean,
+
+    /** Make button rounded */
     rounded: Boolean,
-    size: String
+
+    /** Make button round */
+    round: Boolean
   },
   computed: {
     componentType() {

@@ -4,10 +4,10 @@
     @click.stop="selectOption"
     :class="{
       'state-disabled': disabled,
-      'state-selected': isSelected
+      'state-selected': selected
     }"
   >
-    <slot />
+    <slot :selected="selected" />
   </li>
 </template>
 
@@ -20,6 +20,7 @@ export default {
   mixins: [Emitter],
 
   props: {
+    /** Option value */
     value: Object
   },
 
@@ -27,7 +28,7 @@ export default {
     disabled() {
       return this.value.disabled
     },
-    isSelected() {
+    selected() {
       return JSON.stringify(this.selectedOption) === JSON.stringify(this.value)
     }
   },
@@ -72,22 +73,22 @@ export default {
   user-select: none;
   overflow: hidden;
 
-  @include when(selected) {
-    background: transparentize($primary-accent, 0.9);
+  // @include when(selected) {
+  //   background: transparentize($primary-accent, 0.9);
 
-    &::before {
-      content: '';
+  //   &::before {
+  //     content: '';
 
-      position: absolute;
-      top: 0;
-      left: 0;
+  //     position: absolute;
+  //     top: 0;
+  //     left: 0;
 
-      width: 3px;
-      height: 100%;
+  //     width: 3px;
+  //     height: 100%;
 
-      background: transparentize($primary-accent, 0.7);
-    }
-  }
+  //     background: transparentize($primary-accent, 0.7);
+  //   }
+  // }
 
   @include when(disabled) {
     color: $input-color--disabled;

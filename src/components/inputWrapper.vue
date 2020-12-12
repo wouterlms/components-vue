@@ -26,8 +26,13 @@
 <script>
 export default {
   props: {
+    /** Title */
     title: String,
+
+    /** Error */
     error: String,
+
+    /** Disabled */
     disabled: Boolean
   }
 }

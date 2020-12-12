@@ -1,31 +1,27 @@
 <template>
   <div>
-    <button-element to="/examples">View Examples</button-element>
+    <button-element to="/examples">examples</button-element>
+    <div style="padding: 10rem; padding-left: 20rem;">
+      {{ color }}
+      <color-picker v-model="color"></color-picker>
+    </div>
   </div>
 </template>
 
 <script>
-import inputElement from '@/components/input'
-import selectElement from '@/components/select'
 import buttonElement from '@/components/button'
+import colorPicker from '@/components/colorPicker'
+
+import variables from '@/assets/scss/_variables.scss'
 
 export default {
   components: {
-    inputElement,
-    selectElement,
-    buttonElement
+    buttonElement,
+    colorPicker
   },
   data() {
     return {
-      options: [
-        {
-          name: 'test'
-        },
-        {
-          name: 'test2'
-        }
-      ],
-      option: null
+      color: variables.primaryAccent
     }
   }
 }

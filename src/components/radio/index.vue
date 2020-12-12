@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import inputWrapperElement from './inputWrapper'
+import inputWrapperElement from '../inputWrapper'
 
 export default {
   components: {

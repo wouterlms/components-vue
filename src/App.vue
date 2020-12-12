@@ -1,50 +1,21 @@
 <template>
   <div class="app">
-    <notifications-element />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import notificationsElement from '@/components/notifications'
-import fakeLoaderElement from '@/components/fakeLoader'
-
 export default {
-  components: {
-    notificationsElement,
-    fakeLoaderElement
-  },
+  components: {},
   data() {
-    return {
-      testString: 'test',
-      options: [
-        {
-          icon: 'add',
-          name: 'I would like to stay here'
-        },
-        {
-          icon: 'remove',
-          name: 'I would like to go there!'
-        }
-      ],
-      tags: ['tag A', 'tag B'],
-      option: null,
-      checked: [],
-      radio: 'A',
-      showModal: false,
-      number: 0,
-      switchh: false,
-      isLoading: true,
-      show: false,
-      finished: false
-    }
+    return {}
   },
   async mounted() {
     // this.notificationTest()
   },
   methods: {
     async notificationTest() {
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000))
       this.finished = true
       this.$notification({
         title: 'Update available',
@@ -60,13 +31,13 @@ export default {
           click: () => {}
         }
       })
-      await new Promise(resolve => setTimeout(resolve, 500))
+      await new Promise((resolve) => setTimeout(resolve, 500))
       this.$notification({
         title: 'Upload successful',
         message: '<b style="font-weight: 500">yeet.pdf</b> was uploaded successfully.',
         type: 'success'
       })
-      await new Promise(resolve => setTimeout(resolve, 500))
+      await new Promise((resolve) => setTimeout(resolve, 500))
       this.$notification({
         title: 'Privacy warning',
         message: 'Someone is trying to login to your account.',

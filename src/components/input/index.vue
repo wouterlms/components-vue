@@ -60,9 +60,9 @@
 </template>
 
 <script>
-import inputWrapperElement from './inputWrapper'
-import iconElement from './icon'
-import loaderElement from './loader'
+import inputWrapperElement from '../inputWrapper'
+import iconElement from '../icon'
+import loaderElement from '../loader'
 
 export default {
   components: {

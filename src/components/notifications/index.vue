@@ -60,8 +60,8 @@
 
 <script>
 import Vue from 'vue'
-import iconElement from './icon'
-import buttonElement from './button'
+import iconElement from '../icon'
+import buttonElement from '../button'
 
 export default {
   components: {

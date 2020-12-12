@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import inputWrapperElement from './inputWrapper'
-import iconElement from './icon'
+import inputWrapperElement from '../inputWrapper'
+import iconElement from '../icon'
 
 export default {
   components: {

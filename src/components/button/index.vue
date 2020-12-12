@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import loaderElement from './loader'
-import iconElement from './icon'
+import loaderElement from '../loader'
+import iconElement from '../icon'
 import variables from '@/assets/scss/_variables.scss'
 
 export default {

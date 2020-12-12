@@ -36,6 +36,7 @@
     <transition name="tooltip">
       <tooltip-element
         v-if="showSelectMenu"
+        :position="position"
         arrow-align="right"
         arrow-offset=".8em"
         margin="0.625em"
@@ -57,8 +58,8 @@
 </template>
 
 <script>
-import inputElement from './input'
-import tooltipElement from './tooltip'
+import inputElement from '../input'
+import tooltipElement from '../tooltip'
 import optionElement from './option'
 
 import emitter from '@/mixins/emitter'
@@ -107,6 +108,12 @@ export default {
     border: {
       type: Boolean,
       default: true
+    },
+
+    /** Position of tooltip (see <tooltip>) */
+    position: {
+      type: String,
+      default: 'bottom'
     }
   },
   data() {
@@ -176,7 +183,7 @@ export default {
   }
 
   &__options {
-    position: relative;
+    // position: relative;
     z-index: 1;
 
     ul {
@@ -189,8 +196,6 @@ export default {
 .tooltip {
   &-enter-active,
   &-leave-active {
-    position: absolute;
-    width: 100%;
     transition: 0.5s cubic-bezier(0.17, 0.67, 0.16, 0.99);
   }
   &-enter-active {

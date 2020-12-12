@@ -190,14 +190,15 @@ export default {
       return {
         ...position,
         ...this.calculateContentTranslate,
-        width: this.width,
+        width: `${this.contentWidth}px`,
         height: `${this.contentHeight}px`
       }
     }
   },
   data() {
     return {
-      contentHeight: 0
+      contentHeight: 0,
+      contentWidth: 0
     }
   },
   mounted() {
@@ -206,6 +207,7 @@ export default {
   methods: {
     handleTooltipResize() {
       // cloned content is 1px off
+      this.contentWidth = this.$refs.tooltipContent.clientWidth
       this.contentHeight = this.$refs.tooltipContent.clientHeight - 1
     }
   }

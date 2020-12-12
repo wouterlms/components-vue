@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import inputElement from './input'
+import inputElement from '../input'
 
 export default {
   components: {

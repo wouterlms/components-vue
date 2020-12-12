@@ -1,16 +1,14 @@
 <template>
   <transition name="transition">
     <div class="tooltip" v-click-outside="() => $emit('click-outside')">
-      <!-- content clone for shadow -->
-      <div class="tooltip__cloned-content" :style="menuStyle">
-        <slot />
-      </div>
+      <!-- content style clone for shadow -->
+      <div class="tooltip__cloned-content" :style="clonedContentStyle"></div>
 
       <!-- arrow -->
       <div class="tooltip__arrow" :style="arrowStyle"></div>
 
       <!-- content -->
-      <div class="tooltip__content" :style="menuStyle">
+      <div class="tooltip__content" :style="menuStyle" @resize="handleTooltipResize" ref="tooltipContent">
         <slot />
       </div>
     </div>
@@ -173,6 +171,37 @@ export default {
         ...this.calculateArrowBorderRadius,
         ...this.calculateArrowPosition
       }
+    },
+
+    clonedContentStyle() {
+      // cloned content is 1px off for some reason
+
+      // clone object
+      const position = JSON.parse(JSON.stringify(this.calculateContentPosition))
+
+      // adjust position
+      position.bottom !== null ? (position.bottom = '-1px') : (position.top = '1px')
+
+      return {
+        ...position,
+        ...this.calculateContentTranslate,
+        width: this.width,
+        height: `${this.contentHeight}px`
+      }
+    }
+  },
+  data() {
+    return {
+      contentHeight: 0
+    }
+  },
+  mounted() {
+    this.handleTooltipResize()
+  },
+  methods: {
+    handleTooltipResize() {
+      // cloned content is 1px off
+      this.contentHeight = this.$refs.tooltipContent.clientHeight - 1
     }
   }
 }
@@ -191,9 +220,11 @@ export default {
   &__cloned-content {
     position: absolute;
     border-radius: $border-radius;
-
-    background: $primary-light;
     overflow: hidden;
+  }
+
+  &__content {
+    background: $primary-light;
   }
 
   &__cloned-content {

@@ -1,5 +1,6 @@
 <template>
   <div class="examples">
+    <fake-loader-element :finished="isFinished" :started="submitLoading" />
     <form @submit.prevent="handleSubmit">
       <h1>Create a notification</h1>
 
@@ -66,14 +67,26 @@
         />
       </div>
 
-      <div style="margin-top: 1rem; display: flex; align-items: center;">
-        <button-element
-          icon="test/notification"
-          native-type="submit"
-          :disabled="submitDisabled"
-          :loading="submitLoading"
-          >Show notification</button-element
+      <div>
+        <checkbox-element v-model="checkbox" label="A" style="margin-bottom: .4rem; font-size: 200%"
+          >checkbox 1</checkbox-element
         >
+        <checkbox-element v-model="checkbox" label="B" style="margin-bottom: .4rem; font-size: 150%"
+          >checkbox 2</checkbox-element
+        >
+        <checkbox-element v-model="checkbox" label="C">checkbox 3</checkbox-element>
+      </div>
+
+      <div>
+        <radio-element v-model="radio" label="A" style="margin-bottom: .4rem; font-size: 200%">radio 1</radio-element>
+        <radio-element v-model="radio" label="B" style="margin-bottom: .4rem; font-size: 150%">radio 2</radio-element>
+        <radio-element v-model="radio" label="C">radio 3</radio-element>
+      </div>
+
+      <div style="margin-top: 1rem; display: flex; align-items: center;">
+        <button-element native-type="submit" :disabled="submitDisabled" :loading="submitLoading">
+          Show notification
+        </button-element>
         <button-element secondary type="danger" style="margin-left: .5rem;" @click="showModal = true">
           Show modal
         </button-element>
@@ -104,7 +117,11 @@ import iconElement from '@/components/icon'
 import buttonElement from '@/components/button'
 import switchElement from '@/components/switch'
 import numberInputElement from '@/components/numberInput'
+import checkboxElement from '@/components/checkbox'
+import radioElement from '@/components/radio'
+
 import modalElement from '@/components/modal'
+import fakeLoaderElement from '@/components/fakeLoader'
 
 import variables from '@/assets/scss/_variables.scss'
 
@@ -117,7 +134,10 @@ export default {
     buttonElement,
     switchElement,
     numberInputElement,
-    modalElement
+    modalElement,
+    checkboxElement,
+    radioElement,
+    fakeLoaderElement
   },
   data() {
     return {
@@ -190,7 +210,11 @@ export default {
       timeout: 3000,
 
       submitLoading: false,
-      showModal: false
+      isFinished: false,
+      showModal: false,
+
+      checkbox: [],
+      radio: 'B'
     }
   },
   computed: {
@@ -217,8 +241,10 @@ export default {
   methods: {
     async handleSubmit() {
       this.submitLoading = true
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      this.isFinished = false
+      await new Promise((resolve) => setTimeout(resolve, 1500))
       this.submitLoading = false
+      this.isFinished = true
 
       this.$notification({
         title: this.title,

@@ -40,41 +40,46 @@ export default {
     }
   },
   async mounted() {
-    // await new Promise(resolve => setTimeout(resolve, 1000))
-    // this.finished = true
-    // this.$notification({
-    //   title: 'Update available',
-    //   message: 'A new <b style="font-weight: 500;">sortware version</b> is available for download.',
-    //   icon: 'test/refresh',
-    //   duration: 0,
-    //   primaryAction: {
-    //     title: 'Update',
-    //     click: () => {}
-    //   },
-    //   secondaryAction: {
-    //     title: 'Not now',
-    //     click: () => {}
-    //   }
-    // })
-    // await new Promise(resolve => setTimeout(resolve, 500))
-    // this.$notification({
-    //   title: 'Upload successful',
-    //   message: '<b style="font-weight: 500">yeet.pdf</b> was uploaded successfully.',
-    //   type: 'success'
-    // })
-    // await new Promise(resolve => setTimeout(resolve, 500))
-    // this.$notification({
-    //   title: 'Privacy warning',
-    //   message: 'Someone is trying to login to your account.',
-    //   icon: 'test/padlock',
-    //   duration: 0,
-    //   type: 'error',
-    //   secondaryAction: {
-    //     title: 'Check Activity',
-    //     type: 'danger',
-    //     click: () => {}
-    //   }
-    // })
+    // this.notificationTest()
+  },
+  methods: {
+    async notificationTest() {
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      this.finished = true
+      this.$notification({
+        title: 'Update available',
+        message: 'A new <b style="font-weight: 500;">sortware version</b> is available for download.',
+        icon: 'test/refresh',
+        duration: 0,
+        primaryAction: {
+          title: 'Update',
+          click: () => {}
+        },
+        secondaryAction: {
+          title: 'Not now',
+          click: () => {}
+        }
+      })
+      await new Promise(resolve => setTimeout(resolve, 500))
+      this.$notification({
+        title: 'Upload successful',
+        message: '<b style="font-weight: 500">yeet.pdf</b> was uploaded successfully.',
+        type: 'success'
+      })
+      await new Promise(resolve => setTimeout(resolve, 500))
+      this.$notification({
+        title: 'Privacy warning',
+        message: 'Someone is trying to login to your account.',
+        icon: 'test/padlock',
+        duration: 0,
+        type: 'error',
+        secondaryAction: {
+          title: 'Check Activity',
+          type: 'danger',
+          click: () => {}
+        }
+      })
+    }
   }
 }
 </script>

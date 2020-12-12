@@ -61,14 +61,17 @@ import inputElement from './input'
 import tooltipElement from './tooltip'
 import optionElement from './option'
 
+import emitter from '@/mixins/emitter'
+
 export default {
-  name: 'elSelect',
-  componentName: 'elSelect',
+  name: 'Select',
+  componentName: 'Select',
   components: {
     inputElement,
     tooltipElement,
     optionElement
   },
+  mixins: [emitter],
   props: {
     options: Array,
     value: Object,
@@ -89,7 +92,8 @@ export default {
   },
   data() {
     return {
-      showSelectMenu: false
+      showSelectMenu: false,
+      selectedOption: null
     }
   },
   computed: {
@@ -100,11 +104,20 @@ export default {
       return this.value[this.label]
     }
   },
+  watch: {
+    showSelectMenu: function(show) {
+      if (show) {
+        this.$nextTick(() => {
+          this.broadcast('Option', 'optionSelected', this.selectedOption)
+        })
+      }
+    }
+  },
   mounted() {
-    this.$on('handleOptionClick', this.select)
+    this.$on('optionClicked', this.select)
   },
   beforeDestroy() {
-    this.$off('handleOptionClick', this.select)
+    this.$off('optionClicked', this.select)
   },
   methods: {
     onInputClick() {
@@ -113,6 +126,7 @@ export default {
     select(option) {
       this.$emit('input', option)
       this.showSelectMenu = false
+      this.selectedOption = option
     }
   }
 }

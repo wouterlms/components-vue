@@ -21,7 +21,7 @@ export default {
   props: {
     radius: {
       type: String,
-      default: '20px'
+      default: '1.25em'
     },
     color: {
       type: String,

@@ -3,7 +3,8 @@
     class="option"
     @click.stop="selectOption"
     :class="{
-      'state-disabled': disabled
+      'state-disabled': disabled,
+      'state-selected': isSelected
     }"
   >
     <slot />
@@ -14,6 +15,8 @@
 import Emitter from '@/mixins/emitter.js'
 
 export default {
+  name: 'Option',
+  componentName: 'Option',
   mixins: [Emitter],
 
   props: {
@@ -23,14 +26,33 @@ export default {
   computed: {
     disabled() {
       return this.value.disabled
+    },
+    isSelected() {
+      return JSON.stringify(this.selectedOption) === JSON.stringify(this.value)
     }
+  },
+
+  data() {
+    return {
+      selectedOption: null
+    }
+  },
+
+  mounted() {
+    this.$on('optionSelected', this.handleOptionSelected)
+  },
+  beforeDestroy() {
+    this.$off('optionSelected', this.handleOptionSelected)
   },
 
   methods: {
     selectOption() {
       if (!this.disabled) {
-        this.dispatch('elSelect', 'handleOptionClick', this.value)
+        this.dispatch('Select', 'optionClicked', this.value)
       }
+    },
+    handleOptionSelected(option) {
+      this.selectedOption = option
     }
   }
 }
@@ -38,6 +60,7 @@ export default {
 
 <style scoped lang="scss">
 .option {
+  position: relative;
   padding: 0.9em;
   text-align: left;
 
@@ -47,6 +70,24 @@ export default {
 
   cursor: pointer;
   user-select: none;
+  overflow: hidden;
+
+  @include when(selected) {
+    background: transparentize($primary-accent, 0.9);
+
+    &::before {
+      content: '';
+
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      width: 3px;
+      height: 100%;
+
+      background: transparentize($primary-accent, 0.7);
+    }
+  }
 
   @include when(disabled) {
     color: $input-color--disabled;
@@ -58,7 +99,7 @@ export default {
   }
 
   &:hover {
-    background: #f5f7fa;
+    background: transparentize($primary-accent, 0.9);
   }
 }
 </style>

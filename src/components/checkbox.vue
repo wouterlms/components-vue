@@ -151,10 +151,10 @@ $transition: cubic-bezier(0.71, -0.46, 0.29, 1.46);
 
         background: $input-background-color;
 
-        width: 14px;
-        height: 14px;
+        width: 0.875em;
+        height: 0.875em;
 
-        padding: 2px;
+        padding: 0.125em;
         box-sizing: border-box;
 
         z-index: 1;
@@ -172,7 +172,7 @@ $transition: cubic-bezier(0.71, -0.46, 0.29, 1.46);
     }
 
     &__label {
-      margin-left: 0.4rem;
+      margin-left: 0.4em;
       font-weight: 500;
     }
   }

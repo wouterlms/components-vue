@@ -12,6 +12,7 @@
 export default {
   props: {
     url: String,
+    started: Boolean,
     finished: Boolean
   },
   data() {
@@ -38,13 +39,18 @@ export default {
         }
       }
     },
+    started: {
+      immediate: true,
+      handler(hasStarted) {
+        if (hasStarted && this.progress === 0) {
+          this.increaseProgress()
+        }
+      }
+    },
     finished: function(isFinished) {
-      isFinished ? this.finishLoading() : this.increaseProgress()
-    }
-  },
-  created() {
-    if (!this.url) {
-      this.increaseProgress()
+      if (isFinished) {
+        this.finishLoading()
+      }
     }
   },
   methods: {
@@ -55,6 +61,7 @@ export default {
         this.progress = this.progress < 40 ? (this.progress += 1) : (this.progress += 0.2)
       }, 50)
     },
+
     finishLoading() {
       clearInterval(this.interval)
       this.progress = 100
@@ -62,17 +69,25 @@ export default {
       setTimeout(() => {
         setTimeout(() => {
           this.$emit('finished')
+
+          const transitionSpeed = this.transitionSpeed
+
+          this.transitionSpeed = 0
+          this.progress = 0
+
+          this.$nextTick(() => {
+            this.transitionSpeed = transitionSpeed
+          })
         }, 200)
       }, this.transitionSpeed)
     },
+
     async fetch(url) {
       this.increaseProgress()
 
-      // await new Promise(res => setTimeout(() => res(), 2000))
-
       fetch(url)
-        .then(res => this.$emit('response', res))
-        .catch(err => this.$emit('error', err))
+        .then((res) => this.$emit('response', res))
+        .catch((err) => this.$emit('error', err))
         .finally(() => {
           this.finishLoading()
         })
@@ -90,7 +105,7 @@ export default {
   width: 100%;
   height: 4px;
 
-  transition: 1s 0.5s;
+  transition: opacity 1s 0.5s;
 
   @include when(finished) {
     opacity: 0;

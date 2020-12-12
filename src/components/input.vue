@@ -18,7 +18,7 @@
 
       <!-- icon -->
       <div v-if="icon" class="input__content__icon">
-        <iconEl :icon="icon" />
+        <icon-element :icon="icon" />
       </div>
 
       <component

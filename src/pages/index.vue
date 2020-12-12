@@ -3,9 +3,7 @@
     <router-link to="/examples">examples</router-link>
 
     <div style="width: 350px; margin-top: 50px;">
-      <input-element title="Your name" disabled> </input-element>
-
-      <select-element :options="options" label="name" v-model="option"> </select-element>
+      <button-element>button</button-element>
     </div>
   </div>
 </template>
@@ -13,11 +11,13 @@
 <script>
 import inputElement from '@/components/input'
 import selectElement from '@/components/select'
+import buttonElement from '@/components/button'
 
 export default {
   components: {
     inputElement,
-    selectElement
+    selectElement,
+    buttonElement
   },
   data() {
     return {

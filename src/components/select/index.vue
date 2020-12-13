@@ -37,9 +37,9 @@
       <tooltip-element
         v-if="showSelectMenu"
         :position="position"
-        arrow-align="right"
-        arrow-offset=".8em"
-        margin="0.625em"
+        align-arrow="right"
+        arrow-offset=".5em"
+        :margin="computedMargin"
         width="100%"
         class="select__options"
       >
@@ -74,7 +74,7 @@ export default {
   },
   mixins: [emitter],
   props: {
-    /** Options (simple), for advanced options use the <option> component */
+    /** Object array of options, for advanced options use the <option> component */
     options: Array,
 
     /** Select value */
@@ -95,7 +95,7 @@ export default {
     /** Error */
     error: String,
 
-    /** Property used to display */
+    /** Property used to display the value */
     label: {
       type: String,
       required: true
@@ -128,6 +128,10 @@ export default {
         return null
       }
       return this.value[this.label]
+    },
+    computedMargin() {
+      if (this.position === 'bottom') return '0.625em'
+      return '3.8em'
     }
   },
   watch: {
@@ -183,7 +187,7 @@ export default {
   }
 
   &__options {
-    // position: relative;
+    position: relative;
     z-index: 1;
 
     ul {

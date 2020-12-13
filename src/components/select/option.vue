@@ -21,7 +21,10 @@ export default {
 
   props: {
     /** Option value */
-    value: Object
+    value: {
+      type: Object,
+      required: true
+    }
   },
 
   computed: {

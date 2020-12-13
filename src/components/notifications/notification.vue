@@ -1,5 +1,5 @@
 <template>
-  <li class="notification" :class="[notificationType, { 'notification--clickable': notification.click }]">
+  <li class="notification" :class="notificationType">
     <div class="notification__inner">
       <!-- row -->
       <div class="notification__row-header">

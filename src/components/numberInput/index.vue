@@ -90,6 +90,9 @@ export default {
   watch: {
     actualValue: function(v) {
       this.$emit('input', this.computedValueAsNumber)
+    },
+    value: function(value) {
+      // this.computedValue = value
     }
   },
   methods: {

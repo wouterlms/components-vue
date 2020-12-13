@@ -63,7 +63,7 @@ body,
   font-family: 'Poppins', sans-serif;
   background: rgb(245, 250, 255);
   padding: 4rem;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
 
   box-sizing: border-box;

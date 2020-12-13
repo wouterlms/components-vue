@@ -10,7 +10,15 @@
     ></div>
 
     <transition name="transition">
-      <tooltip-element margin=".5em" v-if="showColorPicker">
+      <tooltip-element
+        margin=".5em"
+        v-if="showColorPicker"
+        :position="position"
+        :align="align"
+        :offset="offset"
+        :align-arrow="alignArrow"
+        :arrow-offset="arrowOffset"
+      >
         <div class="color-picker__dropdown">
           <div class="color-picker__dropdown__selection">
             <!-- color panel -->
@@ -79,7 +87,12 @@ export default {
     buttonElement
   },
   props: {
-    value: String
+    value: String,
+    position: String,
+    align: String,
+    offset: String,
+    alignArrow: String,
+    arrowOffset: String
   },
   computed: {
     valueAsRgb: {
@@ -125,6 +138,9 @@ export default {
   watch: {
     valueAsHex: function(hex) {
       this.$emit('input', hex)
+    },
+    value: function(value) {
+      this.color = hexToRgb(value)
     }
   },
   methods: {
@@ -157,6 +173,8 @@ export default {
   }
 
   &__dropdown {
+    position: relative;
+    z-index: 99;
     width: 400px;
     padding: 0.5em;
 

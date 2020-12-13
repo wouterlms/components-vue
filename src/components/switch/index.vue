@@ -95,6 +95,12 @@ $transition: 0.3s;
   @include when(disabled) {
     cursor: not-allowed;
 
+    @include when(switched) {
+      .slider__slider {
+        background: lighten($switch-background-color--active, 20);
+      }
+    }
+
     .slider {
       &__active,
       &__inactive {

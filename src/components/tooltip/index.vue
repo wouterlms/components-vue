@@ -1,18 +1,11 @@
 <template>
-  <transition name="transition">
-    <div class="tooltip" v-click-outside="() => $emit('click-outside')">
-      <!-- content style clone for shadow -->
-      <div class="tooltip__cloned-content" :style="clonedContentStyle"></div>
-
-      <!-- arrow -->
-      <div class="tooltip__arrow" :style="arrowStyle"></div>
-
-      <!-- content -->
-      <div class="tooltip__content" :style="menuStyle" @resize="handleTooltipResize" ref="tooltipContent">
-        <slot />
-      </div>
+  <div class="tooltip" v-click-outside="() => $emit('click-outside')">
+    <div class="tooltip__arrow" :style="arrowStyle"></div>
+    <div class="tooltip__shadow-layer" :style="shadowLayerStyle"></div>
+    <div class="tooltip__content" :style="contentStyle" @resize="handleContentResize" ref="content">
+      <slot></slot>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>
@@ -55,7 +48,7 @@ export default {
     },
 
     /** Alignment of arrow - 'left' | 'right' | 'center' */
-    arrowAlign: {
+    alignArrow: {
       type: String,
       default: 'center',
       note: 'arrow alignment, left | right | center'
@@ -73,142 +66,121 @@ export default {
       default: 'auto'
     }
   },
+
+  data() {
+    return {
+      contentWidth: 0,
+      contentHeight: 0
+    }
+  },
   computed: {
-    transformedOffset() {
-      if (this.align === 'right') {
-        return `-${this.offset}`
-      }
-      return this.offset
-    },
+    shadowLayerStyle() {
+      // cloned content is 1px off for some reason
+      const style = {}
+      let translateX, translateY
 
-    transformedArrowOffset() {
-      if (this.arrowAlign === 'left') {
-        return this.arrowOffset
-      }
-      return `-${this.arrowOffset}`
-    },
-
-    calculateContentPosition() {
-      const position = {}
-
-      this.position === 'top' ? (position.top = 0) : (position.bottom = 0)
-
-      if (this.align === 'left') {
-        position.right = `calc(50% - ${this.arrowSize})`
-      } else if (this.align === 'right') {
-        position.left = `calc(50% - ${this.arrowSize})`
-      } else {
-        position.left = '50%'
-      }
-
-      return position
-    },
-
-    calculateContentTranslate() {
       if (this.position === 'top') {
-        return {
-          transform: `translate(${
-            this.align === 'center' ? `calc(-50% + ${this.transformedOffset})` : this.transformedOffset
-          }, calc(-100% - ${this.margin}))`
-        }
+        style.top = `calc(-${this.margin} - 1px)`
+        translateY = '-100%'
+      } else if (this.position === 'bottom') {
+        style.bottom = `calc(-${this.margin} - 1px)`
+        translateY = '100%'
       }
+
+      if (this.align === 'center') {
+        style.left = `calc(50% + ${this.offset})`
+        translateX = '-50%'
+      } else if (this.align === 'left') {
+        style.left = this.offset
+        translateX = 0
+      } else if (this.align === 'right') {
+        style.right = this.offset
+        translateX = 0
+      }
+
+      style.transform = `translate(${translateX}, ${translateY})`
+
       return {
-        transform: `translate(${
-          this.align === 'center' ? `calc(-50% + ${this.transformedOffset})` : this.transformedOffset
-        }, calc(100% + ${this.margin}))`
+        ...style,
+        width: `${this.contentWidth - 1}px`,
+        height: `${this.contentHeight - 2}px`
       }
     },
+    contentStyle() {
+      const style = {}
+      let translateX, translateY
 
+      if (this.position === 'top') {
+        style.top = `calc(-${this.margin})`
+        translateY = '-100%'
+      } else if (this.position === 'bottom') {
+        style.bottom = `calc(-${this.margin})`
+        translateY = '100%'
+      }
+
+      if (this.align === 'center') {
+        style.left = `calc(50% + ${this.offset})`
+        translateX = '-50%'
+      } else if (this.align === 'left') {
+        style.left = this.offset
+        translateX = 0
+      } else if (this.align === 'right') {
+        style.right = this.offset
+        translateX = 0
+      }
+
+      style.transform = `translate(${translateX}, ${translateY})`
+
+      return {
+        ...style,
+        width: this.width
+      }
+    },
+    arrowStyle() {
+      const style = {}
+      let translateX, translateY
+
+      if (this.position === 'top') {
+        style.top = `calc(-${this.margin})`
+        translateY = '-50%'
+      } else if (this.position === 'bottom') {
+        style.bottom = `calc(-${this.margin})`
+        translateY = '50%'
+      }
+
+      if (this.alignArrow === 'center') {
+        style.left = '50%'
+        translateX = '-50%'
+      } else if (this.alignArrow === 'left') {
+        style.left = `calc(${this.arrowSize} / 2 + ${this.arrowOffset})`
+        translateX = 0
+      } else if (this.alignArrow === 'right') {
+        style.right = `calc(${this.arrowSize} / 2 + ${this.arrowOffset})`
+        translateX = 0
+      }
+
+      style.transform = `translate(${translateX}, ${translateY}) rotate(45deg)`
+
+      return {
+        ...style,
+        ...this.calculateArrowBorderRadius,
+        width: this.arrowSize,
+        height: this.arrowSize
+      }
+    },
     calculateArrowBorderRadius() {
       return this.position === 'top'
         ? { borderBottomRightRadius: this.arrowBorderRadius }
         : { borderTopLeftRadius: this.arrowBorderRadius }
-    },
-
-    calculateArrowPosition() {
-      const position = {}
-
-      if (this.arrowAlign === 'left') {
-        position.left = 0
-      } else if (this.arrowAlign === 'center') {
-        position.left = '50%'
-      } else {
-        position.right = 0
-      }
-
-      if (this.position === 'top') {
-        position.top = 0
-      } else {
-        position.bottom = 0
-      }
-
-      return position
-    },
-
-    calculateArrowTransform() {
-      const transform = {}
-
-      const x = this.arrowAlign === 'left' || this.arrowAlign === 'right' ? this.transformedArrowOffset : '-50%'
-
-      if (this.position === 'top') {
-        return {
-          transform: `translate(${x}, calc(-50% - ${this.margin})) rotate(45deg)`
-        }
-      }
-      return {
-        transform: `translate(${x}, calc(50% + ${this.margin} + 1px)) rotate(45deg)`
-      }
-    },
-
-    menuStyle() {
-      return {
-        ...this.calculateContentPosition,
-        ...this.calculateContentTranslate,
-        width: this.width
-      }
-    },
-
-    arrowStyle() {
-      return {
-        width: this.arrowSize,
-        height: this.arrowSize,
-        ...this.calculateArrowTransform,
-        ...this.calculateArrowBorderRadius,
-        ...this.calculateArrowPosition
-      }
-    },
-
-    clonedContentStyle() {
-      // cloned content is 1px off for some reason
-
-      // clone object
-      const position = JSON.parse(JSON.stringify(this.calculateContentPosition))
-
-      // adjust position
-      position.bottom !== null ? (position.bottom = '-1px') : (position.top = '1px')
-
-      return {
-        ...position,
-        ...this.calculateContentTranslate,
-        width: `${this.contentWidth}px`,
-        height: `${this.contentHeight}px`
-      }
-    }
-  },
-  data() {
-    return {
-      contentHeight: 0,
-      contentWidth: 0
     }
   },
   mounted() {
-    this.handleTooltipResize()
+    this.handleContentResize()
   },
   methods: {
-    handleTooltipResize() {
-      // cloned content is 1px off
-      this.contentWidth = this.$refs.tooltipContent.clientWidth
-      this.contentHeight = this.$refs.tooltipContent.clientHeight - 1
+    handleContentResize() {
+      this.contentWidth = this.$refs.content.clientWidth
+      this.contentHeight = this.$refs.content.clientHeight
     }
   }
 }
@@ -216,33 +188,36 @@ export default {
 
 <style scoped lang="scss">
 .tooltip {
-  &__arrow {
+  &__arrow,
+  &__content,
+  &__shadow-layer {
     position: absolute;
-    box-shadow: $box-shadow;
+  }
+
+  &__arrow {
     background: $primary-light;
+    box-shadow: $box-shadow;
+
     z-index: 2;
   }
 
-  &__content,
-  &__cloned-content {
-    position: absolute;
-    border-radius: $border-radius;
-    overflow: hidden;
-  }
-
   &__content {
     background: $primary-light;
+    border-radius: $border-radius;
+    color: $primary-dark;
+
+    overflow: hidden;
+
+    z-index: 3;
   }
 
-  &__cloned-content {
-    @include no-scrollbar;
+  &__shadow-layer {
+    background: $primary-light;
+    border-radius: $border-radius;
+    color: $primary-dark;
 
     box-shadow: $box-shadow;
     z-index: 1;
-  }
-
-  &__content {
-    z-index: 3;
   }
 }
 </style>

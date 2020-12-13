@@ -6,6 +6,7 @@
         background: valueAsRgb
       }"
       @click="showColorPicker = !showColorPicker"
+      v-click-outside="() => (showColorPicker = false)"
     ></div>
 
     <transition name="transition">
@@ -43,17 +44,17 @@
             <!-- rgb -->
             <input-element
               v-if="selectedColorOption.name === 'rgb'"
-              v-model="valueAsRgb"
-              readonly
+              :value="valueAsRgb"
               class="color-picker__dropdown__footer__input"
+              @keydown.enter="handleRgbEnter"
             />
 
             <!-- hex -->
             <input-element
               v-else-if="selectedColorOption.name === 'hex'"
-              v-model="valueAsHex"
-              readonly
+              :value="valueAsHex"
               class="color-picker__dropdown__footer__input"
+              @keydown.enter="handleHexEnter"
             />
 
             <!-- select -->
@@ -73,7 +74,7 @@ import inputElement from '../input'
 import selectElement from '../select'
 import buttonElement from '../button'
 
-import { rgbObjectToString, rgbToHex, hexToRgb, rgbToHsv } from './color'
+import { rgbObjectToString, rgbToHex, hexToRgb, rgbToHsv, isValidRgb, isValidHex, rgbStringToObject } from './color'
 
 export default {
   components: {
@@ -95,32 +96,11 @@ export default {
     align: String
   },
   computed: {
-    valueAsRgb: {
-      set(rgb) {
-        // const isValidRgb = /^rgb[(](?:\s*0*(?:\d\d?(?:\.\d+)?(?:\s*%)?|\.\d+\s*%|100(?:\.0*)?\s*%|(?:1\d\d|2[0-4]\d|25[0-5])(?:\.\d+)?)\s*(?:,(?![)])|(?=[)]))){3}[)]$/i.test(
-        //   rgb
-        // )
-        // if (isValidRgb) {
-        //   const rgbArr = rgb.replace(/[^\d,]/g, '').split(',')
-        //   this.color = { r: rgbArr[0], g: rgbArr[1], b: rgbArr[2] }
-        // }
-      },
-
-      get() {
-        return rgbObjectToString(this.color)
-      }
+    valueAsRgb() {
+      return rgbObjectToString(this.color)
     },
-    valueAsHex: {
-      set(hex) {
-        // const isValidHex = /^#[0-9A-F]{6}$/i.test(hex)
-        // if (isValidHex) {
-        //   this.color = hexToRgb(hex)
-        // }
-      },
-
-      get() {
-        return rgbToHex(this.color.r, this.color.g, this.color.b)
-      }
+    valueAsHex() {
+      return rgbToHex(this.color.r, this.color.g, this.color.b)
     },
     colorAsHsv() {
       return rgbToHsv(this.color.r, this.color.g, this.color.b)
@@ -149,6 +129,20 @@ export default {
     },
     handleSetColor(rgb) {
       this.color = rgb
+    },
+    handleRgbEnter(e) {
+      const rgb = e.target.value
+
+      if (isValidRgb(rgb)) {
+        this.color = rgbStringToObject(rgb)
+      }
+    },
+    handleHexEnter(e) {
+      const hex = e.target.value
+
+      if (isValidHex(hex)) {
+        this.color = hexToRgb(hex)
+      }
     }
   }
 }
@@ -171,6 +165,8 @@ export default {
     border-radius: $border-radius-sm;
     width: 100%;
     height: 100%;
+
+    cursor: pointer;
   }
 
   &__dropdown {

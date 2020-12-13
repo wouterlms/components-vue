@@ -27,6 +27,9 @@ export const bound01 = (value, max) => {
 }
 
 export const rgbToHex = (r, g, b) => {
+  r = parseInt(r)
+  g = parseInt(g)
+  b = parseInt(b)
   return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
 }
 
@@ -95,4 +98,23 @@ export const hsvToRgb = (h, s, v) => {
     g: Math.round(g * 255),
     b: Math.round(b * 255)
   }
+}
+
+export const rgbStringToObject = (rgb) => {
+  rgb = rgb
+    .substring(4, rgb.length - 1)
+    .replace(/ /g, '')
+    .split(',')
+
+  return { r: rgb[0], g: rgb[1], b: rgb[2] }
+}
+
+export const isValidHex = (hex) => {
+  return /^#[0-9A-F]{6}$/i.test(hex)
+}
+
+export const isValidRgb = (rgb) => {
+  return /^rgb[(](?:\s*0*(?:\d\d?(?:\.\d+)?(?:\s*%)?|\.\d+\s*%|100(?:\.0*)?\s*%|(?:1\d\d|2[0-4]\d|25[0-5])(?:\.\d+)?)\s*(?:,(?![)])|(?=[)]))){3}[)]$/i.test(
+    rgb
+  )
 }

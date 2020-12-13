@@ -6,6 +6,7 @@
       background: `hsl(${hue}, 100%, 50%)`
     }"
     @click="handleMouseMove"
+    @mousedown="handleMouseDown"
   >
     <div
       class="panel__cursor"
@@ -40,7 +41,9 @@ export default {
 
   watch: {
     rgb: function(rgb) {
-      this.$emit('color', rgb)
+      if (this.isMouseDown) {
+        this.$emit('color', rgb)
+      }
     },
     hue: {
       handler(hue) {
@@ -52,7 +55,7 @@ export default {
     },
     color: {
       handler(rgb) {
-        // this.setColor()
+        this.setColor()
       }
     }
   },
@@ -62,12 +65,10 @@ export default {
     this.setColor()
     document.addEventListener('mouseup', this.handleMouseUp)
     document.addEventListener('mousemove', this.handleMouseMove)
-    document.addEventListener('mousedown', this.handleMouseDown)
   },
   beforeDestroy() {
     document.removeEventListener('mouseup', this.handleMouseUp)
     document.removeEventListener('mousemove', this.handleMouseMove)
-    document.removeEventListener('mousedown', this.handleMouseDown)
   },
   methods: {
     setColor() {
@@ -119,6 +120,7 @@ export default {
 <style scoped lang="scss">
 .panel {
   position: relative;
+  border-radius: $border-radius-sm;
 
   &::before,
   &::after {
@@ -129,6 +131,8 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
+
+    border-radius: $border-radius-sm;
   }
 
   &::before {
@@ -145,11 +149,17 @@ export default {
     width: 5px;
     height: 5px;
 
-    border: 1px solid black;
-    background: white;
+    border: 1px solid white;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: $box-shadow;
+    border-radius: 50%;
 
     transform: translate(-50%, -50%);
     z-index: 1;
+
+    &::before {
+      content: '';
+    }
   }
 }
 </style>

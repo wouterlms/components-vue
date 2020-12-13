@@ -1,5 +1,5 @@
 <template>
-  <div class="slider" ref="slider" @click="handleMouseMove">
+  <div class="slider" ref="slider" @click="handleMouseMove" @mousedown="handleMouseDown">
     <div
       class="slider__cursor"
       :style="{
@@ -28,7 +28,7 @@ export default {
       this.$emit('hue', hue)
     },
     color: function() {
-      // this.setColor()
+      this.setColor()
     }
   },
   mounted() {
@@ -37,12 +37,10 @@ export default {
 
     document.addEventListener('mouseup', this.handleMouseUp)
     document.addEventListener('mousemove', this.handleMouseMove)
-    document.addEventListener('mousedown', this.handleMouseDown)
   },
   beforeDestroy() {
     document.removeEventListener('mouseup', this.handleMouseUp)
     document.removeEventListener('mousemove', this.handleMouseMove)
-    document.removeEventListener('mousedown', this.handleMouseDown)
   },
   methods: {
     setColor() {
@@ -79,6 +77,7 @@ export default {
 .slider {
   position: relative;
   background: linear-gradient(180deg, red 0, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, red);
+  border-radius: $border-radius-sm;
 
   &__cursor {
     position: absolute;

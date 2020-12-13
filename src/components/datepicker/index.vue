@@ -1,12 +1,15 @@
 <template>
-  <div class="datepicker">
+  <div class="date-picker">
     <input-element
       :value="formattedSelectedDate"
       :icon="align !== 'right' ? 'calendar' : null"
       :suffix-icon="align === 'right' ? 'calendar' : null"
-      placeholder="Pick a date"
+      :title="title"
+      :error="error"
+      :disabled="disabled"
+      :placeholder="placeholder"
       @keydown.enter="handleEnterKeyDown"
-      @mouseup.native="showDropdown = !showDropdown"
+      @mouseup.native="handleMouseUp"
       v-click-outside="() => (this.showDropdown = false)"
     />
 
@@ -19,23 +22,23 @@
         :align="align"
         :align-arrow="align"
       >
-        <div class="datepicker__dropdown">
-          <div class="datepicker__dropdown__header">
+        <div class="date-picker__dropdown">
+          <div class="date-picker__dropdown__header">
             <button-element icon="chevron-left" @click="prevMonth" />
             <span>{{ months[month - 1] }} {{ year }}</span>
             <button-element icon="chevron-right" @click="nextMonth" />
           </div>
 
-          <ul class="datepicker__dropdown__days-of-week">
+          <ul class="date-picker__dropdown__days-of-week">
             <li v-for="day of days" :key="day">{{ day }}</li>
           </ul>
 
-          <ul class="datepicker__dropdown__days-of-month">
+          <ul class="date-picker__dropdown__days-of-month">
             <!-- previous month -->
             <li
               v-for="i in firstDayIndentation"
               :key="`prev${i}`"
-              class="datepicker__dropdown__days-of-month__previous-month"
+              class="date-picker__dropdown__days-of-month__previous-month"
             >
               {{ nDaysOfPreviousMonth - firstDayIndentation + i }}
             </li>
@@ -44,15 +47,15 @@
             <li
               v-for="day of nDaysOfMonth"
               :key="day"
-              class="datepicker__dropdown__days-of-month__day"
-              :class="{ 'datepicker__dropdown__days-of-month__day--selected': isSelected(day) }"
+              class="date-picker__dropdown__days-of-month__day"
+              :class="{ 'date-picker__dropdown__days-of-month__day--selected': isSelected(day) }"
               @click="selectDate(day)"
             >
               {{ day }}
             </li>
 
             <!-- next month -->
-            <li v-for="i in nNextMonthDays" :key="`next${i}`" class="datepicker__dropdown__days-of-month__next-month">
+            <li v-for="i in nNextMonthDays" :key="`next${i}`" class="date-picker__dropdown__days-of-month__next-month">
               {{ i }}
             </li>
           </ul>
@@ -87,7 +90,19 @@ export default {
     align: {
       type: String,
       default: 'right'
-    }
+    },
+
+    /** Placeholder */
+    placeholder: String,
+
+    /** Title */
+    title: String,
+
+    /** Error */
+    error: String,
+
+    /** Disable input */
+    disabled: Boolean
   },
   computed: {
     nDaysOfPreviousMonth() {
@@ -163,8 +178,18 @@ export default {
       this.selectedDate = new Date(`${this.year}-${this.month}-${day}`)
       this.showDropdown = false
     },
+    handleMouseUp() {
+      this.showDropdown = this.disabled ? false : !this.showDropdown
+    },
     handleEnterKeyDown(e) {
-      this.selectedDate = new Date(e.target.value)
+      const date = new Date(e.target.value)
+
+      if (this.isValidDate(date)) {
+        this.selectedDate = date
+      }
+    },
+    isValidDate(date) {
+      return date instanceof Date && !isNaN(date)
     }
   },
   watch: {
@@ -185,7 +210,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.datepicker {
+.date-picker {
   position: relative;
   z-index: 1;
 
@@ -253,8 +278,8 @@ export default {
         }
 
         &--selected {
-          background: $primary-accent;
-          color: $primary-light;
+          color: $primary-accent;
+          box-shadow: $box-shadow;
 
           &:hover {
             background: $primary-accent;

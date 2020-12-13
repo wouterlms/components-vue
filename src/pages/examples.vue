@@ -392,6 +392,24 @@
       </div>
     </section>
 
+    <section>
+      <h1>Date picker</h1>
+
+      <props :element="datePicker" />
+
+      <div class="row">
+        <div class="w-350">
+          <date-picker-element v-model="date" align="left" position="bottom" title="Select a date" />
+        </div>
+        <div class="w-350">
+          <date-picker-element v-model="date" position="top" title="Select a date" error="Error" />
+        </div>
+        <div class="w-350">
+          <date-picker-element v-model="date" position="top" align="right" title="Select a date" disabled />
+        </div>
+      </div>
+    </section>
+
     <!-- modal -->
     <section>
       <h1>Modal</h1>
@@ -442,6 +460,7 @@ import inputWrapperElement from '@/components/inputWrapper'
 import radioElement from '@/components/radio'
 import switchElement from '@/components/switch'
 import colorPickerElement from '@/components/colorPicker'
+import datePickerElement from '@/components/datePicker'
 import modalElement from '@/components/modal'
 
 import props from '@/pages/props'
@@ -464,6 +483,7 @@ export default {
     radioElement,
     switchElement,
     colorPickerElement,
+    datePickerElement,
     modalElement
   },
   data() {
@@ -478,6 +498,7 @@ export default {
       radio: radioElement,
       switchElement: switchElement,
       colorPicker: colorPickerElement,
+      datePicker: datePickerElement,
       modal: modalElement,
       notifications: {
         props: {
@@ -523,6 +544,8 @@ export default {
       switchValue: false,
 
       color: variables.primaryAccent,
+
+      date: new Date(),
 
       showModal: false
     }

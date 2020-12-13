@@ -20,7 +20,7 @@
       readonly
       v-click-outside="() => (showSelectMenu = false)"
       v-model="computedValue"
-      @click.native="onInputClick"
+      @mouseup.native="onInputClick"
     >
       <!-- prepend -->
       <template slot="prepend">

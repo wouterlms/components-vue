@@ -50,8 +50,7 @@ export default {
     /** Alignment of arrow - 'left' | 'right' | 'center' */
     alignArrow: {
       type: String,
-      default: 'center',
-      note: 'arrow alignment, left | right | center'
+      default: 'center'
     },
 
     /** Offset of arrow to either left or right */

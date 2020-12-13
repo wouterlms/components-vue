@@ -87,11 +87,22 @@ export default {
     buttonElement
   },
   props: {
+    /** Color value */
     value: String,
+
+    /** Tooltip position (see <tooltip>) */
     position: String,
+
+    /** Tooltip alignment (see <tooltip>) */
     align: String,
+
+    /** Tooltip offset (see <tooltip>) */
     offset: String,
+
+    /** Tooltip arrow alignment (see <tooltip>) */
     alignArrow: String,
+
+    /** Tooltip arrow offset (see <tooltip>) */
     arrowOffset: String
   },
   computed: {
@@ -161,9 +172,10 @@ export default {
   height: 2em;
 
   padding: 0.2em;
-  // border: 1px solid $border-color;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
+
+  z-index: 1;
 
   &__selector {
     background: #000;
@@ -173,8 +185,6 @@ export default {
   }
 
   &__dropdown {
-    position: relative;
-    z-index: 99;
     width: 400px;
     padding: 0.5em;
 

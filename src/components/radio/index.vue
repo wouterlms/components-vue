@@ -91,8 +91,8 @@ $transition: cubic-bezier(0.71, -0.46, 0.29, 1.46);
             border-color: $error;
             background: $input-background-color;
 
-            svg {
-              fill: $error;
+            &::before {
+              background: $error;
             }
           }
         }
@@ -123,7 +123,7 @@ $transition: cubic-bezier(0.71, -0.46, 0.29, 1.46);
     }
   }
 
-  &:hover:not(.state-disabled):not(.state-disabled) &__content__input {
+  &:hover:not(.state-disabled):not(.state-error) &__content__input {
     span {
       border-color: $radio-border-color--hover;
     }

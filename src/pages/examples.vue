@@ -5,11 +5,7 @@
     <section>
       <h1>Icon</h1>
 
-      <ul class="props">
-        <li v-for="(prop, i) in icon.props" :key="i">
-          <span class="prop">{{ i }}</span>
-        </li>
-      </ul>
+      <props :element="icon" />
 
       <div class="row">
         <icon-element icon="test/padlock" />
@@ -23,11 +19,7 @@
     <section>
       <h1>Tooltip</h1>
 
-      <ul class="props">
-        <li v-for="(prop, i) in tooltip.props" :key="i">
-          <span class="prop">{{ i }}</span>
-        </li>
-      </ul>
+      <props :element="tooltip" />
 
       <div class="row">
         <span class="tooltip-wrapper">
@@ -128,11 +120,7 @@
     <section>
       <h1>Button</h1>
 
-      <ul class="props">
-        <li v-for="(prop, i) in button.props" :key="i">
-          <span class="prop">{{ i }}</span>
-        </li>
-      </ul>
+      <props :element="button" />
 
       <div class="row">
         <button-element icon="test/padlock">Default</button-element>
@@ -181,11 +169,7 @@
     <section>
       <h1>Input</h1>
 
-      <ul class="props">
-        <li v-for="(prop, i) in input.props" :key="i">
-          <span class="prop">{{ i }}</span>
-        </li>
-      </ul>
+      <props :element="input" />
 
       <div class="row">
         <input-element icon="test/padlock" placeholder="Placeholder" class="w-350" title="Simple input" />
@@ -220,13 +204,9 @@
 
     <!-- number input -->
     <section>
-      <h1>Number input (in development)</h1>
+      <h1>Number input</h1>
 
-      <ul class="props">
-        <li v-for="(prop, i) in numberInput.props" :key="i">
-          <span class="prop">{{ i }}</span>
-        </li>
-      </ul>
+      <props :element="numberInput" />
 
       <div class="row">
         <number-input-element title="Simple number input" v-model="number" class="w-150" />
@@ -235,17 +215,26 @@
         <number-input-element title="Input with step" v-model="number" class="w-150" :step="5" />
         <number-input-element title="Input with precision" v-model="number" class="w-150" :step="0.2" :precision="2" />
       </div>
+
+      <div class="row">
+        <number-input-element
+          title="Number input with prepend, precision & step"
+          prepend="$"
+          v-model="number"
+          class="w-150"
+          :max="10"
+          :min="5"
+          :step="0.22"
+          :precision="2"
+        />
+      </div>
     </section>
 
     <!-- select -->
     <section>
       <h1>Select</h1>
 
-      <ul class="props">
-        <li v-for="(prop, i) in select.props" :key="i">
-          <span class="prop">{{ i }}</span>
-        </li>
-      </ul>
+      <props :element="select" />
 
       <div class="row">
         <select-element
@@ -326,11 +315,7 @@
     <section>
       <h1>Checkbox</h1>
 
-      <ul class="props">
-        <li v-for="(prop, i) in checkbox.props" :key="i">
-          <span class="prop">{{ i }}</span>
-        </li>
-      </ul>
+      <props :element="checkbox" />
 
       <div class="row">
         <div class="w-350">
@@ -348,14 +333,11 @@
       </div>
     </section>
 
+    <!-- radio -->
     <section>
       <h1>Radio</h1>
 
-      <ul class="props">
-        <li v-for="(prop, i) in radio.props" :key="i">
-          <span class="prop">{{ i }}</span>
-        </li>
-      </ul>
+      <props :element="radio" />
 
       <div class="row">
         <div class="w-350">
@@ -373,14 +355,11 @@
       </div>
     </section>
 
+    <!-- switch -->
     <section>
       <h1>Switch</h1>
 
-      <ul class="props">
-        <li v-for="(prop, i) in switchElement.props" :key="i">
-          <span class="prop">{{ i }}</span>
-        </li>
-      </ul>
+      <props :element="switchElement" />
 
       <div class="row">
         <switch-element v-model="switchValue" inactive-text="Inactive" active-text="Active" class="w-350" />
@@ -396,14 +375,11 @@
       </div>
     </section>
 
+    <!-- color picker -->
     <section>
       <h1>Color picker</h1>
 
-      <ul class="props">
-        <li v-for="(prop, i) in colorPicker.props" :key="i">
-          <span class="prop">{{ i }}</span>
-        </li>
-      </ul>
+      <props :element="colorPicker" />
 
       <div class="row">
         <div class="w-350">
@@ -416,14 +392,11 @@
       </div>
     </section>
 
+    <!-- modal -->
     <section>
       <h1>Modal</h1>
 
-      <ul class="props">
-        <li v-for="(prop, i) in modal.props" :key="i">
-          <span class="prop">{{ i }}</span>
-        </li>
-      </ul>
+      <props :element="modal" />
 
       <div class="row">
         <button-element @click="showModal = true">Show modal</button-element>
@@ -431,32 +404,11 @@
       </div>
     </section>
 
+    <!-- notifications -->
     <section>
-      <h1>Notification</h1>
+      <h1>Notifications</h1>
 
-      <ul class="props">
-        <li>
-          <span class="prop">title</span>
-        </li>
-        <li>
-          <span class="prop">message</span>
-        </li>
-        <li>
-          <span class="prop">icon</span>
-        </li>
-        <li>
-          <span class="prop">type</span>
-        </li>
-        <li>
-          <span class="prop">timeout</span>
-        </li>
-        <li>
-          <span class="prop">primaryAction</span>
-        </li>
-        <li>
-          <span class="prop">secondaryAction</span>
-        </li>
-      </ul>
+      <props :element="notifications" />
 
       <div class="row">
         <button-element @click="showDefaultNotification">Default notification</button-element>
@@ -484,7 +436,7 @@ import buttonElement from '@/components/button'
 import inputElement from '@/components/input'
 import selectElement from '@/components/select'
 import optionElement from '@/components/select/option'
-import numberInputElement from '@/components/numberInput'
+import numberInputElement from '@/components/numberInputV2'
 import checkboxElement from '@/components/checkbox'
 import inputWrapperElement from '@/components/inputWrapper'
 import radioElement from '@/components/radio'
@@ -492,10 +444,13 @@ import switchElement from '@/components/switch'
 import colorPickerElement from '@/components/colorPicker'
 import modalElement from '@/components/modal'
 
+import props from '@/pages/props'
 import variables from '@/assets/scss/_variables.scss'
 
 export default {
   components: {
+    props,
+
     notificationsElement,
     tooltipElement,
     buttonElement,
@@ -524,6 +479,17 @@ export default {
       switchElement: switchElement,
       colorPicker: colorPickerElement,
       modal: modalElement,
+      notifications: {
+        props: {
+          title: {},
+          message: {},
+          icon: {},
+          type: {},
+          timeout: {},
+          primaryAction: {},
+          secondaryAction: {}
+        }
+      },
 
       showTooltip: false,
 
@@ -550,9 +516,9 @@ export default {
       customOption: null,
       number: 0,
       singleCheckbox: false,
-      checkboxes: [],
+      checkboxes: ['D'],
 
-      radioValue: null,
+      radioValue: 'D',
 
       switchValue: false,
 
@@ -561,6 +527,7 @@ export default {
       showModal: false
     }
   },
+  mounted() {},
   methods: {
     showDefaultNotification() {
       this.$notification({
@@ -641,35 +608,6 @@ section {
 
   .w-150 {
     width: 150px;
-  }
-}
-
-.props {
-  margin: 1rem 0 3rem 0;
-
-  li {
-    display: flex;
-    align-items: center;
-
-    .prop {
-      font-size: $font-sm;
-      color: $primary-text;
-      background-color: #f9fafc;
-      border: 1px solid #eaeefb;
-
-      padding: 4px;
-      border-radius: 4px;
-    }
-
-    .type {
-      margin-left: 5px;
-      font-size: $font-xs;
-      color: $secondary-text;
-    }
-
-    &:not(:last-of-type) {
-      margin-bottom: 0.5rem;
-    }
   }
 }
 

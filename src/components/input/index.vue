@@ -17,7 +17,7 @@
       <slot name="prepend" />
 
       <!-- icon -->
-      <div v-if="icon" class="input__content__icon">
+      <div v-if="icon" class="input__content__icon" @click.prevent>
         <icon-element :icon="icon" />
       </div>
 
@@ -44,7 +44,7 @@
       />
 
       <!-- suffix icon -->
-      <div v-if="getSuffixIcon" class="input__content__suffix-icon" @click="handleSuffixIconClick">
+      <div v-if="getSuffixIcon" class="input__content__suffix-icon" @click.prevent="handleSuffixIconClick">
         <icon-element :icon="getSuffixIcon" />
       </div>
 
@@ -177,10 +177,12 @@ export default {
     onInput(e) {
       this.$emit('input', e.target.value)
     },
-    onFocus() {
+    onFocus(e) {
+      this.$emit('focus', e)
       this.isFocused = true
     },
-    onBlur() {
+    onBlur(e) {
+      this.$emit('blur', e)
       this.isFocused = false
     },
     handleSuffixIconClick() {

@@ -2,11 +2,10 @@
   <div
     class="panel"
     ref="panel"
-    @mousedown="handleMouseDown"
-    @mousemove="handleMouseMove"
     :style="{
       background: `hsl(${hue}, 100%, 50%)`
     }"
+    @click="handleMouseMove"
   >
     <div
       class="panel__cursor"
@@ -60,11 +59,15 @@ export default {
 
   mounted() {
     this.panel = this.$refs.panel
-    this.setColor() // can't use immediate watcher because panel is not initialised
+    this.setColor()
     document.addEventListener('mouseup', this.handleMouseUp)
+    document.addEventListener('mousemove', this.handleMouseMove)
+    document.addEventListener('mousedown', this.handleMouseDown)
   },
   beforeDestroy() {
     document.removeEventListener('mouseup', this.handleMouseUp)
+    document.removeEventListener('mousemove', this.handleMouseMove)
+    document.removeEventListener('mousedown', this.handleMouseDown)
   },
   methods: {
     setColor() {
@@ -80,7 +83,7 @@ export default {
     },
 
     handleMouseMove(e) {
-      if (!this.isMouseDown) {
+      if (!this.isMouseDown && e.type !== 'click') {
         return
       }
 

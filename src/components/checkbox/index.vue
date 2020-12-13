@@ -180,7 +180,6 @@ $transition: cubic-bezier(0.71, -0.46, 0.29, 1.46);
 
     &__label {
       margin-left: 0.4em;
-      font-weight: 500;
     }
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="slider" ref="slider" @mousedown="handleMouseDown" @mousemove="handleMouseMove">
+  <div class="slider" ref="slider" @click="handleMouseMove">
     <div
       class="slider__cursor"
       :style="{
@@ -36,9 +36,13 @@ export default {
     this.setColor()
 
     document.addEventListener('mouseup', this.handleMouseUp)
+    document.addEventListener('mousemove', this.handleMouseMove)
+    document.addEventListener('mousedown', this.handleMouseDown)
   },
   beforeDestroy() {
     document.removeEventListener('mouseup', this.handleMouseUp)
+    document.removeEventListener('mousemove', this.handleMouseMove)
+    document.removeEventListener('mousedown', this.handleMouseDown)
   },
   methods: {
     setColor() {
@@ -50,7 +54,7 @@ export default {
     },
 
     handleMouseMove(e) {
-      if (!this.isMouseDown) {
+      if (!this.isMouseDown && e.type !== 'click') {
         return
       }
 

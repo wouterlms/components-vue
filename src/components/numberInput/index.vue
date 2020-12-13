@@ -2,11 +2,12 @@
   <input-element
     class="number-input"
     type="text"
-    v-model="computedValue"
+    :value="modifiedValue"
     :disabled="disabled"
     :title="title"
     :error="error"
     :class="{ 'state-disabled': disabled }"
+    @keydown.enter="handleEnterKeyDown"
   >
     <template slot="prepend">
       <span role="button" @click.prevent="decrease">
@@ -69,17 +70,11 @@ export default {
     precision: Number
   },
   computed: {
-    computedValue: {
-      get() {
-        return `${this.prepend || ''}${this.actualValue}${this.append || ''}`
-      },
-
-      set(value) {
-        this.actualValue = this.precision ? parseFloat(value).toFixed(this.precision) : parseFloat(value)
+    modifiedValue() {
+      if (isNaN(parseFloat(this.actualValue))) {
+        return `${this.prepend || ''}${this.append || ''}`
       }
-    },
-    computedValueAsNumber() {
-      return parseFloat(this.computedValue.replace(/\D/g, ''))
+      return `${this.prepend || ''}${parseFloat(this.actualValue).toFixed(this.precision)}${this.append || ''}`
     }
   },
   data() {
@@ -88,41 +83,26 @@ export default {
     }
   },
   watch: {
-    actualValue: function(v) {
-      this.$emit('input', this.computedValueAsNumber)
-    },
     value: function(value) {
-      // this.computedValue = value
+      this.actualValue = value
+    },
+    actualValue: function(value) {
+      this.$emit('input', value)
     }
   },
   methods: {
     decrease() {
-      if (this.disabled) {
-        return
-      }
-      if (this.computedValueAsNumber - this.step > this.min) {
-        if (this.computedValueAsNumber > this.max) {
-          this.computedValue = this.max
-        } else {
-          this.computedValue = this.computedValueAsNumber - this.step
-        }
-      } else {
-        this.computedValue = this.min
+      if (!this.disabled) {
+        this.actualValue = Math.min(Math.max(this.actualValue - this.step, this.min), this.max)
       }
     },
     increase() {
-      if (this.disabled) {
-        return
+      if (!this.disabled) {
+        this.actualValue = Math.min(Math.max(this.actualValue + this.step, this.min), this.max)
       }
-      if (this.computedValueAsNumber + this.step < this.max) {
-        if (this.computedValueAsNumber < this.min) {
-          this.computedValue = this.min
-        } else {
-          this.computedValue = this.computedValueAsNumber + this.step
-        }
-      } else {
-        this.computedValue = this.max
-      }
+    },
+    handleEnterKeyDown(e) {
+      this.actualValue = parseFloat(e.target.value.replace(/\D+/g, ''))
     }
   }
 }

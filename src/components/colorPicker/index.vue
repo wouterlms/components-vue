@@ -6,7 +6,6 @@
         background: valueAsRgb
       }"
       @click="showColorPicker = !showColorPicker"
-      v-click-outside="() => (showColorPicker = false)"
     ></div>
 
     <transition name="transition">
@@ -15,9 +14,8 @@
         v-if="showColorPicker"
         :position="position"
         :align="align"
-        :offset="offset"
-        :align-arrow="alignArrow"
-        :arrow-offset="arrowOffset"
+        :align-arrow="align"
+        arrow-offset=".6em"
       >
         <div class="color-picker__dropdown">
           <div class="color-picker__dropdown__selection">
@@ -94,16 +92,7 @@ export default {
     position: String,
 
     /** Tooltip alignment (see <tooltip>) */
-    align: String,
-
-    /** Tooltip offset (see <tooltip>) */
-    offset: String,
-
-    /** Tooltip arrow alignment (see <tooltip>) */
-    alignArrow: String,
-
-    /** Tooltip arrow offset (see <tooltip>) */
-    arrowOffset: String
+    align: String
   },
   computed: {
     valueAsRgb: {
@@ -234,7 +223,7 @@ export default {
 .transition {
   &-enter-active,
   &-leave-active {
-    transition: 0.5s cubic-bezier(0.17, 0.67, 0.16, 0.99);
+    transition: 0.3s cubic-bezier(0.17, 0.67, 0.16, 0.99);
   }
   &-enter-active {
     opacity: 0;

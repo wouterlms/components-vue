@@ -37,9 +37,9 @@
         :max="max"
         :resize="resize"
         :style="inputStyle"
-        @input="onInput"
-        @focus="onFocus"
-        @blur="onBlur"
+        @input="handleInput"
+        @focus="handleFocus"
+        @blur="handleBlur"
         @keydown="(e) => $emit('keydown', e)"
       />
 
@@ -174,14 +174,14 @@ export default {
   },
 
   methods: {
-    onInput(e) {
+    handleInput(e) {
       this.$emit('input', e.target.value)
     },
-    onFocus(e) {
+    handleFocus(e) {
       this.$emit('focus', e)
       this.isFocused = true
     },
-    onBlur(e) {
+    handleBlur(e) {
       this.$emit('blur', e)
       this.isFocused = false
     },

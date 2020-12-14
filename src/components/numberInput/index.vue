@@ -93,16 +93,22 @@ export default {
   methods: {
     decrease() {
       if (!this.disabled) {
-        this.actualValue = Math.min(Math.max(this.actualValue - this.step, this.min), this.max)
+        this.actualValue = this.actualValue - this.step
+        this.validate()
       }
     },
     increase() {
       if (!this.disabled) {
-        this.actualValue = Math.min(Math.max(this.actualValue + this.step, this.min), this.max)
+        this.actualValue = this.actualValue + this.step
+        this.validate()
       }
     },
+    validate() {
+      this.actualValue = Math.min(Math.max(this.actualValue, this.min), this.max)
+    },
     handleEnterKeyDown(e) {
-      this.actualValue = parseFloat(e.target.value.replace(/\D+/g, ''))
+      this.actualValue = parseFloat(e.target.value.replace(/[^\d.]|\.(?=.*\.)/g, ''))
+      this.validate()
     }
   }
 }

@@ -280,10 +280,6 @@ export default {
         &--selected {
           color: $primary-accent;
           box-shadow: $box-shadow;
-
-          &:hover {
-            background: $primary-accent;
-          }
         }
       }
     }

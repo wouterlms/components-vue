@@ -5,7 +5,6 @@
     :to="to"
     :href="href"
     :disabled="disabled || loading"
-    @click="handleClick"
     class="button"
     :class="[
       buttonType,
@@ -16,6 +15,7 @@
         'button--rounded': rounded
       }
     ]"
+    @click="handleClick"
   >
     <span class="button__content">
       <icon-element v-if="icon" :icon="icon" class="button__content__icon" />
@@ -140,6 +140,10 @@ $transition: 0.3s;
 
   font-family: inherit;
   transition: 0.3s;
+
+  &:active {
+    filter: brightness(80%);
+  }
 
   @include when(loading) {
     cursor: not-allowed;

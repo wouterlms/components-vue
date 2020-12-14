@@ -1,18 +1,19 @@
 <template>
   <div>
-    <notifications-element />
     <button-element to="/examples">examples</button-element>
+
+    <time-picker-element></time-picker-element>
   </div>
 </template>
 
 <script>
-import notificationsElement from '@/components/notifications'
 import buttonElement from '@/components/button'
+import timePickerElement from '@/components/timePicker'
 
 export default {
   components: {
     buttonElement,
-    notificationsElement
+    timePickerElement
   },
   data() {
     return {}

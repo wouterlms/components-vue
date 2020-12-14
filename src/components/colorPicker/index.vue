@@ -3,7 +3,7 @@
     <div
       class="color-picker__selector"
       :style="{
-        background: valueAsRgb
+        background: hex
       }"
       @click="showColorPicker = !showColorPicker"
       v-click-outside="() => (showColorPicker = false)"
@@ -11,26 +11,22 @@
 
     <transition name="transition">
       <tooltip-element
-        margin=".5em"
         v-if="showColorPicker"
         :position="position"
         :align="align"
         :align-arrow="align"
         arrow-offset=".6em"
+        margin=".5em"
       >
         <div class="color-picker__dropdown">
           <div class="color-picker__dropdown__selection">
             <!-- color panel -->
-            <color-panel
-              class="color-picker__dropdown__panel"
-              :hue="hue"
-              :color="colorAsHsv"
-              @color="handleSetColor"
-            ></color-panel>
+            <color-panel class="color-picker__dropdown__panel" @sv="handleSv" :hsv="hsv"></color-panel>
 
             <!-- color slider -->
-            <color-slider class="color-picker__dropdown__slider" :color="colorAsHsv" @hue="handleSetHue"></color-slider>
+            <color-slider class="color-picker__dropdown__slider" @h="handleH" :hsv="hsv"></color-slider>
           </div>
+
           <div class="color-picker__dropdown__footer">
             <!-- hex / rgb select -->
             <select-element
@@ -44,7 +40,7 @@
             <!-- rgb -->
             <input-element
               v-if="selectedColorOption.name === 'rgb'"
-              :value="valueAsRgb"
+              :value="rgbString"
               class="color-picker__dropdown__footer__input"
               @keydown.enter="handleRgbEnter"
             />
@@ -52,7 +48,7 @@
             <!-- hex -->
             <input-element
               v-else-if="selectedColorOption.name === 'hex'"
-              :value="valueAsHex"
+              :value="hex"
               class="color-picker__dropdown__footer__input"
               @keydown.enter="handleHexEnter"
             />
@@ -74,7 +70,16 @@ import inputElement from '../input'
 import selectElement from '../select'
 import buttonElement from '../button'
 
-import { rgbObjectToString, rgbToHex, hexToRgb, rgbToHsv, isValidRgb, isValidHex, rgbStringToObject } from './color'
+import {
+  hsvToRgb,
+  rgbToHex,
+  rgbToHsv,
+  hexToRgb,
+  rgbObjectToString,
+  isValidRgb,
+  isValidHex,
+  rgbStringToObject
+} from './color'
 
 export default {
   components: {
@@ -96,52 +101,65 @@ export default {
     align: String
   },
   computed: {
-    valueAsRgb() {
-      return rgbObjectToString(this.color)
+    rgb() {
+      return hsvToRgb(this.hsv.h, this.hsv.s, this.hsv.v)
     },
-    valueAsHex() {
-      return rgbToHex(this.color.r, this.color.g, this.color.b)
+    rgbString() {
+      return rgbObjectToString(this.rgb)
     },
-    colorAsHsv() {
-      return rgbToHsv(this.color.r, this.color.g, this.color.b)
+    hex() {
+      return rgbToHex(this.rgb.r, this.rgb.g, this.rgb.b)
     }
   },
   data() {
     return {
+      hsv: { h: 0, s: 0, v: 0 },
       showColorPicker: false,
-      color: hexToRgb(this.value),
-      hue: 0,
       colorOptions: [{ name: 'rgb' }, { name: 'hex' }],
       selectedColorOption: { name: 'rgb' }
     }
   },
   watch: {
-    valueAsHex: function(hex) {
-      this.$emit('input', hex)
+    value: {
+      immediate: true,
+      handler(hex) {
+        if (hex !== this.hex) {
+          const rgb = hexToRgb(hex)
+          this.hsv = rgbToHsv(rgb.r, rgb.g, rgb.b)
+        }
+      }
     },
-    value: function(value) {
-      this.color = hexToRgb(value)
+    hsv: {
+      deep: true,
+      handler() {
+        this.$emit('input', this.hex)
+      }
     }
   },
   methods: {
-    handleSetHue(hue) {
-      this.hue = hue
+    handleSv({ saturation, value }) {
+      this.hsv.s = saturation
+      this.hsv.v = value
     },
-    handleSetColor(rgb) {
-      this.color = rgb
+    handleH(hue) {
+      this.hsv.h = hue
     },
+
     handleRgbEnter(e) {
       const rgb = e.target.value
 
       if (isValidRgb(rgb)) {
-        this.color = rgbStringToObject(rgb)
+        const rgbObject = rgbStringToObject(rgb)
+        this.hsv = rgbToHsv(rgbObject.r, rgbObject.g, rgbObject.b)
       }
     },
+
     handleHexEnter(e) {
       const hex = e.target.value
 
       if (isValidHex(hex)) {
-        this.color = hexToRgb(hex)
+        const rgbObject = hexToRgb(hex)
+        this.hsv = rgbToHsv(rgbObject.r, rgbObject.g, rgbObject.b)
       }
     }
   }

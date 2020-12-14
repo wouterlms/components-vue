@@ -3,7 +3,7 @@
     class="panel"
     ref="panel"
     :style="{
-      background: `hsl(${hue}, 100%, 50%)`
+      background: `hsl(${hsv.h}, 100%, 50%)`
     }"
     @click="handleMouseMove"
     @mousedown="handleMouseDown"
@@ -19,14 +19,10 @@
 </template>
 
 <script>
-import { hsvToRgb } from './color'
-
 export default {
   props: {
-    hue: Number,
-    color: Object
+    hsv: Object
   },
-  computed: {},
   data() {
     return {
       cursorTop: 0,
@@ -34,35 +30,22 @@ export default {
       saturation: 0,
       value: 0,
       panel: null,
-      isMouseDown: false,
-      rgb: null
+      isMouseDown: false
     }
   },
-
   watch: {
-    rgb: function(rgb) {
-      if (this.isMouseDown) {
-        this.$emit('color', rgb)
-      }
+    value: function(value) {
+      this.$emit('sv', { saturation: this.saturation, value })
     },
-    hue: {
-      handler(hue) {
-        this.$emit('color', hsvToRgb(this.hue, this.saturation, this.value))
-      }
-    },
-    saturation: function() {
-      this.rgb = hsvToRgb(this.hue, this.saturation, this.value)
-    },
-    color: {
-      handler(rgb) {
-        this.setColor()
-      }
+    hsv: function(hsv) {
+      this.setCursorPosition(hsv.s, hsv.v)
     }
   },
-
   mounted() {
     this.panel = this.$refs.panel
-    this.setColor()
+
+    this.setCursorPosition(this.hsv.s, this.hsv.v)
+
     document.addEventListener('mouseup', this.handleMouseUp)
     document.addEventListener('mousemove', this.handleMouseMove)
   },
@@ -71,13 +54,11 @@ export default {
     document.removeEventListener('mousemove', this.handleMouseMove)
   },
   methods: {
-    setColor() {
+    setCursorPosition(saturation, value) {
       const rect = this.panel.getBoundingClientRect()
 
-      this.cursorLeft = (this.color.s * rect.width) / 100
-      this.cursorTop = ((100 - this.color.v) * rect.height) / 100
-      this.saturation = this.color.s
-      this.value = this.color.v
+      this.cursorLeft = (saturation * rect.width) / 100
+      this.cursorTop = ((100 - value) * rect.height) / 100
     },
     handleMouseDown() {
       this.isMouseDown = true
@@ -102,14 +83,14 @@ export default {
       this.cursorTop = top
       this.cursorLeft = left
 
-      this.toColor(top, left, rect)
+      this.positionToHsv(top, left, rect)
     },
 
     handleMouseUp() {
       this.isMouseDown = false
     },
 
-    toColor(top, left, rect) {
+    positionToHsv(top, left, rect) {
       this.saturation = (left / rect.width) * 100
       this.value = 100 - (top / rect.height) * 100
     }

@@ -182,10 +182,14 @@
 
         <input-element placeholder="prepend & append" class="w-350">
           <template slot="prepend">
-            <span class="prepend">www.</span>
+            <div class="prepend">
+              <span>www.</span>
+            </div>
           </template>
           <template slot="append">
-            <span class="append">.com</span>
+            <div class="append">
+              <icon-element icon="test/search" />
+            </div>
           </template>
         </input-element>
 
@@ -392,6 +396,7 @@
       </div>
     </section>
 
+    <!-- date picker -->
     <section>
       <h1>Date picker</h1>
 
@@ -407,6 +412,42 @@
         <div class="w-350">
           <date-picker-element v-model="date" position="top" align="right" title="Select a date" disabled />
         </div>
+      </div>
+    </section>
+
+    <!-- time picker -->
+    <section>
+      <h1>Time picker (in development)</h1>
+
+      <props :element="timePicker" />
+
+      <div class="row">
+        <div class="w-350">
+          <time-picker-element
+            v-model="time"
+            position="bottom"
+            title="Select a date"
+            step="01:00"
+            start="08:00"
+            end="18:00"
+          />
+        </div>
+        <div class="w-350">
+          <time-picker-element v-model="time" position="top" title="Select a date" error="Error" />
+        </div>
+        <div class="w-350">
+          <time-picker-element v-model="time" position="top" title="Select a date" disabled />
+        </div>
+      </div>
+
+      <div class="row">
+        <time-picker-element
+          title="Custom values readonly"
+          v-model="time"
+          :times="['12:00', '13:05', '14:00']"
+          class="w-350"
+          readonly
+        />
       </div>
     </section>
 
@@ -443,6 +484,18 @@
         </div>
       </div>
     </section>
+
+    <section>
+      <h1>Fake Loader</h1>
+
+      <props :element="fakeLoader" />
+
+      <fake-loader-element :started="startedLoading" :finished="finishedLoading" />
+
+      <button-element @click="startFakeLoader" :disabled="startedLoading && !finishedLoading">
+        Start fake loader
+      </button-element>
+    </section>
   </div>
 </template>
 
@@ -461,7 +514,9 @@ import radioElement from '@/components/radio'
 import switchElement from '@/components/switch'
 import colorPickerElement from '@/components/colorPicker'
 import datePickerElement from '@/components/datePicker'
+import timePickerElement from '@/components/timePicker'
 import modalElement from '@/components/modal'
+import fakeLoaderElement from '@/components/fakeLoader'
 
 import props from '@/pages/props'
 import variables from '@/assets/scss/_variables.scss'
@@ -484,7 +539,9 @@ export default {
     switchElement,
     colorPickerElement,
     datePickerElement,
-    modalElement
+    timePickerElement,
+    modalElement,
+    fakeLoaderElement
   },
   data() {
     return {
@@ -499,7 +556,9 @@ export default {
       switchElement: switchElement,
       colorPicker: colorPickerElement,
       datePicker: datePickerElement,
+      timePicker: timePickerElement,
       modal: modalElement,
+      fakeLoader: fakeLoaderElement,
       notifications: {
         props: {
           title: {},
@@ -514,7 +573,12 @@ export default {
 
       showTooltip: false,
 
-      options: [{ option: 'Option 1' }, { option: 'Option 2' }],
+      options: [
+        { option: 'Option 1' },
+        { option: 'Option 2' },
+        { option: 'Option 3', disabled: true },
+        { option: 'Option 4' }
+      ],
       option: null,
 
       customOptions: [
@@ -546,8 +610,12 @@ export default {
       color: variables.primaryAccent,
 
       date: new Date(),
+      time: new Date(),
 
-      showModal: false
+      showModal: false,
+
+      startedLoading: false,
+      finishedLoading: false
     }
   },
   mounted() {},
@@ -601,6 +669,15 @@ export default {
           }
         }
       })
+    },
+    startFakeLoader() {
+      this.finishedLoading = false
+      this.startedLoading = true
+
+      setTimeout(() => {
+        this.finishedLoading = true
+        this.startedLoading = false
+      }, 1000)
     }
   }
 }
@@ -634,22 +711,29 @@ section {
   }
 }
 
-.prepend {
-  padding: $input-padding;
+.prepend,
+.append {
+  padding: 0 $input-padding;
   background: $input-background-color--disabled;
-  border-right: 1px solid $border-color;
-  line-height: 1.5;
-  border-radius: $border-radius 0 0 $border-radius;
   color: $input-placeholder-color;
+  display: flex;
+  align-items: center;
+
+  align-self: stretch;
+}
+
+.prepend {
+  border-right: 1px solid $border-color;
+  border-radius: $border-radius 0 0 $border-radius;
 }
 
 .append {
-  padding: $input-padding;
-  background: $input-background-color--disabled;
   border-left: 1px solid $border-color;
-  line-height: 1.5;
   border-radius: 0 $border-radius $border-radius 0;
-  color: $input-placeholder-color;
+
+  svg {
+    fill: $input-placeholder-color;
+  }
 }
 
 .prepend-icon {

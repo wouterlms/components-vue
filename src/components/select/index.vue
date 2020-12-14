@@ -9,6 +9,7 @@
     }"
   >
     <input-element
+      :value="computedValue"
       :icon="icon"
       :placeholder="placeholder"
       :loading="loading"
@@ -16,11 +17,11 @@
       :title="title"
       :error="error"
       :border="border"
+      :readonly="readonly"
       suffix-icon="chevron-down"
-      readonly
       v-click-outside="() => (showSelectMenu = false)"
-      v-model="computedValue"
       @mouseup.native="onInputClick"
+      @keydown.enter="(e) => $emit('custom-value', e.target.value)"
     >
       <!-- prepend -->
       <template slot="prepend">
@@ -82,6 +83,12 @@ export default {
 
     /** Native placeholder */
     placeholder: String,
+
+    /** Native readonly */
+    readonly: {
+      type: Boolean,
+      default: true
+    },
 
     /** Icon */
     icon: String,
@@ -145,9 +152,11 @@ export default {
   },
   mounted() {
     this.$on('optionClicked', this.select)
+    this.$on('closeSelectMenu', this.handleCloseSelectMenu)
   },
   beforeDestroy() {
     this.$off('optionClicked', this.select)
+    this.$off('closeSelectMenu', this.handleCloseSelectMenu)
   },
   methods: {
     onInputClick() {
@@ -157,6 +166,9 @@ export default {
       this.$emit('input', option)
       this.showSelectMenu = false
       this.selectedOption = option
+    },
+    handleCloseSelectMenu() {
+      this.showSelectMenu = false
     }
   }
 }
@@ -191,8 +203,9 @@ export default {
     z-index: 1;
 
     ul {
+      @include scroll-bar;
       max-height: 300px;
-      overflow: scroll;
+      overflow-y: auto;
     }
   }
 }

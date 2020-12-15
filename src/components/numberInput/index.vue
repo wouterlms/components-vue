@@ -104,7 +104,12 @@ export default {
       }
     },
     validate() {
-      this.actualValue = Math.min(Math.max(this.actualValue, this.min), this.max)
+      // otherwise watcher doesn't get emit the change
+      // (e.g. if max value is 10; change value to 10+ twice in a row)
+      // 2nd time change won't be emitted
+      this.$nextTick(() => {
+        this.actualValue = Math.min(Math.max(this.actualValue, this.min), this.max)
+      })
     },
     handleEnterKeyDown(e) {
       this.actualValue = parseFloat(e.target.value.replace(/[^\d.]|\.(?=.*\.)/g, ''))
